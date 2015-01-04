@@ -1,0 +1,16 @@
+Indicator
+	name : string
+	value : double
+	childs : vector<Value>
+
+Value
+	name : string
+	weight: double
+	value: double
+
+Indice -> Value
+	borneFav: double
+	borneUnfav: double
+
+Module -> Value
+	childs: vector<Value>

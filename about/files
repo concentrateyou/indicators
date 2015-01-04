@@ -1,0 +1,5 @@
+about/ fichiers de conception
+gui/ application qt
+tests/ les tests
+core/ les classes metiers
+terminal/ version command line

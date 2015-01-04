@@ -1,0 +1,2 @@
+Interface in english
+Export Indicator as Image, PDF and csv (excel table)
