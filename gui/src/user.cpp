@@ -19,7 +19,10 @@ const QString& User::getName() const {
 	return name_;
 }
 void User::setName(const QString& name){
-	name_ = name;
+	if(name_ != name){
+		name_ = name;
+		emit nameChanged();		
+	}
 }
 int User::getId() const {
 	return id_;

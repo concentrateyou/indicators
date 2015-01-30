@@ -7,7 +7,7 @@
 
 class User : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QString id READ getId)
+    Q_PROPERTY(int id READ getId)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
 private:
 	static int count_;
