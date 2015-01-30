@@ -1,4 +1,5 @@
 TEMPLATE = lib
 CONFIG = staticlib
-SOURCES = indicator.cpp
-HEADERS = indicator.hpp
+QT += core
+HEADERS = indicator.hpp index.hpp application.hpp module.hpp value.hpp
+SOURCES = indicator.cpp index.cpp application.cpp module.cpp value.cpp

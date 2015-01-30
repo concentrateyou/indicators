@@ -45,8 +45,16 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = indicator.cpp 
-OBJECTS       = indicator.o
+SOURCES       = indicator.cpp \
+		index.cpp \
+		application.cpp \
+		module.cpp \
+		value.cpp 
+OBJECTS       = indicator.o \
+		index.o \
+		application.o \
+		module.o \
+		value.o
 DIST          = /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/common/shell-unix.conf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/common/unix.conf \
@@ -155,7 +163,15 @@ DIST          = /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/spec_pre.
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/default_pre.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/resolve_config.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/default_post.prf \
-		core.pro indicator.hpp indicator.cpp
+		core.pro indicator.hpp \
+		index.hpp \
+		application.hpp \
+		module.hpp \
+		value.hpp indicator.cpp \
+		index.cpp \
+		application.cpp \
+		module.cpp \
+		value.cpp
 QMAKE_TARGET  = core
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = libcore.a
@@ -443,6 +459,20 @@ compiler_clean:
 
 indicator.o: indicator.cpp indicator.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o indicator.o indicator.cpp
+
+index.o: index.cpp index.hpp \
+		value.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o index.o index.cpp
+
+application.o: application.cpp application.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o application.o application.cpp
+
+module.o: module.cpp module.hpp \
+		value.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o module.o module.cpp
+
+value.o: value.cpp value.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o value.o value.cpp
 
 ####### Install
 

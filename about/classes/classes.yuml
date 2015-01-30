@@ -1,16 +1,48 @@
 Indicator
 	name : string
 	value : double
-	childs : vector<Value>
+	childs : vector<int>
 
 Value
+	id : int
+	parent_id : int
 	name : string
 	weight: double
 	value: double
 
-Indice -> Value
+Index -> Value
 	borneFav: double
 	borneUnfav: double
 
 Module -> Value
-	childs: vector<Value>
+	childs: vector<int>
+
+Application
+	indicator: Indicator
+	modules : map<int, Module>
+	indexes : map<int, Index>
+
+	create(name)
+	load(filename)
+	save(filename)
+	export(filename, Format)
+	import(filename, Format)
+
+	addIndex(parent_id, name, weight, borneFav, borneUnfav, value) 
+	// parent_id = 0 to add to the indicator
+	removeIndex(id)
+	editIndex(id, name, weight, borneFav, borneUnfav, value)
+
+	addModule(parent_id, name, weight)
+	// parent_id = 0 to add to the indicator
+	removeModule(id)
+	editModule(id, name, weight)
+
+	signal changed()
+
+Format : enum
+	XML
+	PDF
+	JPG
+	CSV
+	EXCEL

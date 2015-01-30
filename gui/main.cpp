@@ -5,5 +5,4 @@ using namespace std;
 int main(int, char**){
 	cout << "Interface Graphique !" << endl;
 	core::Indicator i;
-	cout << i.sayHi() << endl;
 }
