@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(int, char**){
-	cout << "Interface Graphique !" << endl;
+	cout << "Tests" << endl;
 	core::Indicator i;
 	cout << i.sayHi() << endl;
 }
