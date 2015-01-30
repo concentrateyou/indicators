@@ -1,11 +1,12 @@
 #include "indicator.hpp"
+using namespace core;
 Indicator::Indicator(){}
 
 Indicator::Indicator(const Indicator &i){
 	name = i.getName();
 	value = i.getValue();
-	for(int i = 0; i < childs.size(); i++){
-		childs[i] = i.getChild(i);
+	for(int ii = 0; ii < childs.size(); ii++){
+		childs[ii] = i.getChild(ii);
 	}
 }
 Indicator::Indicator(QString n, double v):name(n),value(v){}
