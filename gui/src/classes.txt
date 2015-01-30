@@ -1,0 +1,15 @@
+App
+  -i
+  	QMap
+  	user.hpp
+  -a
+  	users:QMap<int,User>:ns
+  -m
+  	init:void::
+  	load:void:filename.QString
+  	save:void:filename.QString
+  	addName:void:name.QString
+===
+User
+  -i QString
+  -a name:QString id:int

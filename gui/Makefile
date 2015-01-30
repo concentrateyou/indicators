@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_NO_DEBUG -DQT_QUICK_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++ -I. -I../core -I/home/webneat/softwares/Qt/5.4/gcc_64/include -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore -I.
+INCPATH       = -I/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++ -I. -I../core -I/home/webneat/softwares/Qt/5.4/gcc_64/include -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQuick -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore -I.
 QMAKE         = /home/webneat/softwares/Qt/5.4/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = indicators1.0.0
 DISTDIR = /home/webneat/isima/zz3/projets/pfa/indicators/gui/.tmp/indicators1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-rpath,/home/webneat/softwares/Qt/5.4/gcc_64 -Wl,-rpath,/home/webneat/softwares/Qt/5.4/gcc_64/lib
-LIBS          = $(SUBLIBS) -L../core -lcore -L/home/webneat/softwares/Qt/5.4/gcc_64/lib -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L../core -lcore -L/home/webneat/softwares/Qt/5.4/gcc_64/lib -lQt5Quick -lQt5Widgets -lQt5Gui -lQt5Qml -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -48,8 +48,17 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp 
-OBJECTS       = main.o
+SOURCES       = src/app.cpp \
+		src/main.cpp \
+		src/user.cpp qrc_resources.cpp \
+		moc_app.cpp \
+		moc_user.cpp
+OBJECTS       = app.o \
+		main.o \
+		user.o \
+		qrc_resources.o \
+		moc_app.o \
+		moc_user.o
 DIST          = /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/common/shell-unix.conf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/common/unix.conf \
@@ -163,12 +172,16 @@ DIST          = /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/spec_pre.
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/resources.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/moc.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/unix/opengl.prf \
+		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/uic.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/unix/thread.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/testcase_targets.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/exceptions.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/lex.prf \
-		gui.pro  main.cpp
+		gui.pro src/app.hpp \
+		src/user.hpp src/app.cpp \
+		src/main.cpp \
+		src/user.cpp
 QMAKE_TARGET  = indicators
 DESTDIR       = ../build/#avoid trailing-slash linebreak
 TARGET        = ../build/indicators
@@ -313,14 +326,20 @@ Makefile: gui.pro /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++/qmake.
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/resources.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/moc.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/unix/opengl.prf \
+		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/uic.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/unix/thread.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/testcase_targets.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/exceptions.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/lex.prf \
 		gui.pro \
+		qml/resources.qrc \
+		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Quick.prl \
 		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Gui.prl \
-		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Core.prl
+		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Core.prl \
+		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Qml.prl \
+		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Network.prl \
+		/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Widgets.prl
 	$(QMAKE) -o Makefile gui.pro
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/common/shell-unix.conf:
@@ -435,14 +454,20 @@ Makefile: gui.pro /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++/qmake.
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/resources.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/moc.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/unix/opengl.prf:
+/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/uic.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/unix/thread.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/testcase_targets.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/exceptions.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/yacc.prf:
 /home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/features/lex.prf:
 gui.pro:
+qml/resources.qrc:
+/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Quick.prl:
 /home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Gui.prl:
 /home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Core.prl:
+/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Qml.prl:
+/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Network.prl:
+/home/webneat/softwares/Qt/5.4/gcc_64/lib/libQt5Widgets.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile gui.pro
 
@@ -457,7 +482,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents qml/resources.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents src/app.hpp src/user.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/app.cpp src/main.cpp src/user.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -478,24 +505,595 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
 check: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
-compiler_moc_header_make_all:
+	-$(DEL_FILE) qrc_resources.cpp
+qrc_resources.cpp: qml/resources.qrc \
+		qml/main.qml
+	/home/webneat/softwares/Qt/5.4/gcc_64/bin/rcc -name resources qml/resources.qrc -o qrc_resources.cpp
+
+compiler_moc_header_make_all: moc_app.cpp moc_user.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_app.cpp moc_user.cpp
+moc_app.cpp: /home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpair.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdebug.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qhash.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlocale.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvariant.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qregexp.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvector.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qset.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		src/user.hpp \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		src/app.hpp
+	/home/webneat/softwares/Qt/5.4/gcc_64/bin/moc $(DEFINES) -I/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++ -I/home/webneat/isima/zz3/projets/pfa/indicators/gui -I/home/webneat/isima/zz3/projets/pfa/indicators/core -I/home/webneat/softwares/Qt/5.4/gcc_64/include -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQuick -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore src/app.hpp -o moc_app.cpp
+
+moc_user.cpp: /home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		src/user.hpp
+	/home/webneat/softwares/Qt/5.4/gcc_64/bin/moc $(DEFINES) -I/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++ -I/home/webneat/isima/zz3/projets/pfa/indicators/gui -I/home/webneat/isima/zz3/projets/pfa/indicators/core -I/home/webneat/softwares/Qt/5.4/gcc_64/include -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQuick -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore src/user.hpp -o moc_user.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
+compiler_uic_make_all:
+compiler_uic_clean:
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean 
 
 ####### Compile
 
-main.o: main.cpp ../core/indicator.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+app.o: src/app.cpp src/app.hpp \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpair.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdebug.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qhash.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlocale.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvariant.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qregexp.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvector.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qset.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		src/user.hpp \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QFile \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfile.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfiledevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o src/app.cpp
+
+main.o: src/main.cpp /home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/QApplication \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/qapplication.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qeventloop.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsize.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qcursor.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/qwidget.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmargins.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrect.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qpalette.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qcolor.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qrgb.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpair.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qregexp.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qbrush.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvector.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qmatrix.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qregion.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qline.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qtransform.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qpainterpath.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qimage.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qpixmap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qhash.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qfont.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qfontinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qkeysequence.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qevent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvariant.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdebug.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlocale.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qset.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qurl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qurlquery.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfile.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfiledevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qvector2d.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qguiapplication.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui/qinputmethod.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QQmlApplicationEngine \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlapplicationengine.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlengine.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qjsengine.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qjsvalue.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qtqmlglobal.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlerror.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmldebug.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QtQml \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QtQmlDepends \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QtCore \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QtCoreDepends \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstractanimation.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qanimationgroup.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qparallelanimationgroup.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpauseanimation.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpropertyanimation.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvariantanimation.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qeasingcurve.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsequentialanimationgroup.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtextcodec.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qendian.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlibraryinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdatetime.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbuffer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdir.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfileinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdiriterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfileselector.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QStringList \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfilesystemwatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlockfile.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qloggingcategory.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qprocess.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qresource.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsavefile.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsettings.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstandardpaths.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstorageinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtemporarydir.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QScopedPointer \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtemporaryfile.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstractproxymodel.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qidentityproxymodel.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringlistmodel.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qjsonarray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qjsondocument.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qjsonobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstracteventdispatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbasictimer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmath.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmetaobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmimedata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectcleanuphandler.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsharedmemory.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsignalmapper.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsocketnotifier.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsystemsemaphore.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtimer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtranslator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qwineventnotifier.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmimedatabase.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmimetype.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfactoryinterface.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlibrary.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qplugin.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpluginloader.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/quuid.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstractstate.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qabstracttransition.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qeventtransition.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfinalstate.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qhistorystate.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsignaltransition.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstate.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstatemachine.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qexception.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfuture.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfutureinterface.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrunnable.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qresultstore.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfuturesynchronizer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfuturewatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qreadwritelock.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsemaphore.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qthread.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qthreadpool.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qthreadstorage.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qwaitcondition.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbitarray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearraymatcher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcache.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcollator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcommandlineoption.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcommandlineparser.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcryptographichash.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlinkedlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmessageauthenticationcode.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qqueue.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qregularexpression.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qscopedvaluerollback.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstack.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtextboundaryfinder.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtimeline.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtimezone.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qxmlstream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtcoreversion.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/QtNetwork \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/QtNetworkDepends \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qabstractnetworkcache.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QSharedDataPointer \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QUrl \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QVariant \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qhttpmultipart.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QByteArray \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QIODevice \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/QNetworkRequest \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/QSslConfiguration \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslconfiguration.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslsocket.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslerror.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslcertificate.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qssl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QFlags \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkcookie.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QList \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMetaType \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkcookiejar.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkdiskcache.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkreply.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/QNetworkAccessManager \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkconfigmanager.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworksession.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkinterface.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qauthenticator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qdnslookup.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qhostinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qnetworkproxy.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qlocalserver.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qlocalsocket.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qtcpserver.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qudpsocket.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslcertificateextension.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslcipher.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qsslkey.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork/qtnetworkversion.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qjsvalueiterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqml.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlprivate.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlparserstatus.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmllist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlabstracturlinterceptor.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlcomponent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlcontext.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlexpression.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlscriptstring.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlextensioninterface.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlextensionplugin.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlfile.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlfileselector.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QQmlEngine \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlincubator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlnetworkaccessmanagerfactory.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlproperty.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmlpropertymap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QHash \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qtqmlversion.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QtDebug \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
+		src/user.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
+
+user.o: src/user.cpp src/user.hpp \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstring.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qchar.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobal.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qconfig.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfeatures.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qtypetraits.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlogging.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qflags.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmutex.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qlist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiterator.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o user.o src/user.cpp
+
+qrc_resources.o: qrc_resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
+
+moc_app.o: moc_app.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_app.o moc_app.cpp
+
+moc_user.o: moc_user.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_user.o moc_user.cpp
 
 ####### Install
 
