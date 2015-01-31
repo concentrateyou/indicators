@@ -9,6 +9,7 @@
 #include "src/app.hpp"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QList>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'app.hpp' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -19,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_App_t {
-    QByteArrayData data[11];
-    char stringdata[67];
+    QByteArrayData data[13];
+    char stringdata[86];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,12 +39,15 @@ QT_MOC_LITERAL(5, 23, 8), // "filename"
 QT_MOC_LITERAL(6, 32, 4), // "save"
 QT_MOC_LITERAL(7, 37, 7), // "addName"
 QT_MOC_LITERAL(8, 45, 4), // "name"
-QT_MOC_LITERAL(9, 50, 5), // "users"
-QT_MOC_LITERAL(10, 56, 10) // "UsersGroup"
+QT_MOC_LITERAL(9, 50, 10), // "removeName"
+QT_MOC_LITERAL(10, 61, 2), // "id"
+QT_MOC_LITERAL(11, 64, 5), // "users"
+QT_MOC_LITERAL(12, 70, 15) // "QList<QObject*>"
 
     },
     "App\0changed\0\0init\0load\0filename\0save\0"
-    "addName\0name\0users\0UsersGroup"
+    "addName\0name\0removeName\0id\0users\0"
+    "QList<QObject*>"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,21 +57,22 @@ static const uint qt_meta_data_App[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
-       1,   50, // properties
+       6,   14, // methods
+       1,   58, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x06 /* Public */,
+       1,    0,   44,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   40,    2, 0x0a /* Public */,
-       4,    1,   41,    2, 0x0a /* Public */,
-       6,    1,   44,    2, 0x0a /* Public */,
-       7,    1,   47,    2, 0x0a /* Public */,
+       3,    0,   45,    2, 0x0a /* Public */,
+       4,    1,   46,    2, 0x0a /* Public */,
+       6,    1,   49,    2, 0x0a /* Public */,
+       7,    1,   52,    2, 0x0a /* Public */,
+       9,    1,   55,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -77,9 +82,10 @@ static const uint qt_meta_data_App[] = {
     QMetaType::Void, QMetaType::QString,    5,
     QMetaType::Void, QMetaType::QString,    5,
     QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, QMetaType::Int,   10,
 
  // properties: name, type, flags
-       9, 0x80000000 | 10, 0x00495009,
+      11, 0x80000000 | 12, 0x00495009,
 
  // properties: notify_signal_id
        0,
@@ -97,6 +103,7 @@ void App::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         case 2: _t->load((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 3: _t->save((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 4: _t->addName((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 5: _t->removeName((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -108,7 +115,14 @@ void App::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
                 *result = 0;
             }
         }
+    } else if (_c == QMetaObject::RegisterPropertyMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<QObject*> >(); break;
+        }
     }
+
 }
 
 const QMetaObject App::staticMetaObject = {
@@ -136,19 +150,19 @@ int App::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 6;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< UsersGroup*>(_v) = getUsers(); break;
+        case 0: *reinterpret_cast< QList<QObject*>*>(_v) = getUsersForQML(); break;
         default: break;
         }
         _id -= 1;
@@ -168,7 +182,7 @@ int App::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 1;
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
         if (_id < 1)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 1;
     }
 #endif // QT_NO_PROPERTIES

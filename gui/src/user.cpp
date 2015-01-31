@@ -1,6 +1,5 @@
 #include "user.hpp"
-
-User::User(){
+User::User(QObject *parent) : QObject(parent){
 	User::count_ ++;
 	id_ = User::count_;
 }
@@ -31,12 +30,14 @@ int User::count_ = 0;
 
 QDataStream& operator>>(QDataStream& in, User& user){
 	QString name;
-	in >> name;
+	int id;
+	in >> id >> name;
+	user.setId(id);
 	user.setName(name);
 	return in;
 }
 
 QDataStream& operator<<(QDataStream& out, const User& user){
-	out << user.getName();
+	out << user.getId() << user.getName();
 	return out;
 }

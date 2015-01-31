@@ -509,7 +509,9 @@ compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_resources.cpp
 qrc_resources.cpp: qml/resources.qrc \
-		qml/main.qml
+		qml/user.qml \
+		qml/main.qml \
+		qml/js/handler.js
 	/home/webneat/softwares/Qt/5.4/gcc_64/bin/rcc -name resources qml/resources.qrc -o qrc_resources.cpp
 
 compiler_moc_header_make_all: moc_app.cpp moc_user.cpp
@@ -585,6 +587,7 @@ moc_app.cpp: /home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
 		src/user.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream \
 		src/app.hpp
 	/home/webneat/softwares/Qt/5.4/gcc_64/bin/moc $(DEFINES) -I/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++ -I/home/webneat/isima/zz3/projets/pfa/indicators/gui -I/home/webneat/isima/zz3/projets/pfa/indicators/core -I/home/webneat/softwares/Qt/5.4/gcc_64/include -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQuick -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore src/app.hpp -o moc_app.cpp
 
@@ -639,6 +642,10 @@ moc_user.cpp: /home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpair.h \
 		src/user.hpp
 	/home/webneat/softwares/Qt/5.4/gcc_64/bin/moc $(DEFINES) -I/home/webneat/softwares/Qt/5.4/gcc_64/mkspecs/linux-g++ -I/home/webneat/isima/zz3/projets/pfa/indicators/gui -I/home/webneat/isima/zz3/projets/pfa/indicators/core -I/home/webneat/softwares/Qt/5.4/gcc_64/include -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQuick -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtGui -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtNetwork -I/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore src/user.hpp -o moc_user.cpp
 
@@ -727,10 +734,10 @@ app.o: src/app.cpp src/app.hpp \
 		src/user.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QFile \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfile.h \
-		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfiledevice.h \
-		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qfiledevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o src/app.cpp
 
 main.o: src/main.cpp /home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/QApplication \
@@ -1029,7 +1036,9 @@ main.o: src/main.cpp /home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/QAp
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qtqmlversion.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QtDebug \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
-		src/user.hpp
+		src/app.hpp \
+		src/user.hpp \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
 user.o: src/user.cpp src/user.hpp \
@@ -1083,7 +1092,11 @@ user.o: src/user.cpp src/user.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontainerfwd.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qisenum.h \
-		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpair.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o user.o src/user.cpp
 
 qrc_resources.o: qrc_resources.cpp 

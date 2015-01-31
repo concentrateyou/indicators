@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_User_t {
     QByteArrayData data[5];
-    char stringdata[26];
+    char stringdata[27];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,11 +32,11 @@ static const qt_meta_stringdata_User_t qt_meta_stringdata_User = {
 QT_MOC_LITERAL(0, 0, 4), // "User"
 QT_MOC_LITERAL(1, 5, 11), // "nameChanged"
 QT_MOC_LITERAL(2, 17, 0), // ""
-QT_MOC_LITERAL(3, 18, 2), // "id"
-QT_MOC_LITERAL(4, 21, 4) // "name"
+QT_MOC_LITERAL(3, 18, 3), // "num"
+QT_MOC_LITERAL(4, 22, 4) // "name"
 
     },
-    "User\0nameChanged\0\0id\0name"
+    "User\0nameChanged\0\0num\0name"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +60,7 @@ static const uint qt_meta_data_User[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-       3, QMetaType::QString, 0x00095001,
+       3, QMetaType::Int, 0x00095001,
        4, QMetaType::QString, 0x00495103,
 
  // properties: notify_signal_id
@@ -128,7 +128,7 @@ int User::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
       else if (_c == QMetaObject::ReadProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< QString*>(_v) = getId(); break;
+        case 0: *reinterpret_cast< int*>(_v) = getId(); break;
         case 1: *reinterpret_cast< QString*>(_v) = getName(); break;
         default: break;
         }
