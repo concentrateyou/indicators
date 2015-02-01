@@ -61,4 +61,6 @@ void Value::setName(QString name){
 }
 void Value::setId(int id){
 	this->id = id;
+	if(Value::count < id)
+		Value::count = id;
 }

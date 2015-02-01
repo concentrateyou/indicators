@@ -6,6 +6,7 @@
 namespace core {
 	class Value : public QObject{
 		Q_OBJECT
+		Q_PROPERTY(int num READ getId)
 		Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
 		Q_PROPERTY(double value READ getValue WRITE setValue NOTIFY valueChanged)
 		Q_PROPERTY(double weigth READ getWeight WRITE setWeight NOTIFY weightChanged)

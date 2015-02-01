@@ -122,3 +122,27 @@ const QMap<int, Index>& Application::getIndexes() const{
 const Indicator& Application::getIndicator() const{
 	return indicator;
 }
+QList<QObject*> Application::getIndexesForQML() {
+	QList<QObject*> list;
+	QMap<int, Index>::iterator it = indexes.begin();
+	while(it != indexes.end()){
+		Index& rindex = *it;
+		Index* pindex = &rindex;
+		++ it;
+	}
+	return list;
+}
+QList<QObject*> Application::getModulsForQML() {
+	QList<QObject*> list;
+	QMap<int, Module>::iterator it = moduls.begin();
+	while(it != moduls.end()){
+		Module& rmodule = *it;
+		Module* pmodule = &rmodule;
+		++ it;
+	}
+	return list;
+}
+
+QObject* Application::getIndicatorForQML() {
+	return &indicator;
+}
