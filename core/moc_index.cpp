@@ -1,42 +1,71 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'index.hpp'
 **
-** Created: Sat Jan 31 13:16:55 2015
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "index.hpp"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'index.hpp' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.4.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+struct qt_meta_stringdata_core__Index_t {
+    QByteArrayData data[6];
+    char stringdata[67];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_core__Index_t, stringdata) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_core__Index_t qt_meta_stringdata_core__Index = {
+    {
+QT_MOC_LITERAL(0, 0, 11), // "core::Index"
+QT_MOC_LITERAL(1, 12, 15), // "borneFavChanged"
+QT_MOC_LITERAL(2, 28, 0), // ""
+QT_MOC_LITERAL(3, 29, 17), // "borneUnfavChanged"
+QT_MOC_LITERAL(4, 47, 8), // "borneFav"
+QT_MOC_LITERAL(5, 56, 10) // "borneUnfav"
+
+    },
+    "core::Index\0borneFavChanged\0\0"
+    "borneUnfavChanged\0borneFav\0borneUnfav"
+};
+#undef QT_MOC_LITERAL
+
 static const uint qt_meta_data_core__Index[] = {
 
  // content:
-       6,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
-       2,   24, // properties
+       2,   26, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        2,       // signalCount
 
- // signals: signature, parameters, type, tag, flags
-      13,   12,   12,   12, 0x05,
-      31,   12,   12,   12, 0x05,
+ // signals: name, argc, parameters, tag, flags
+       1,    0,   24,    2, 0x06 /* Public */,
+       3,    0,   25,    2, 0x06 /* Public */,
+
+ // signals: parameters
+    QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
-      58,   51, 0x06495103,
-      67,   51, 0x06495103,
+       4, QMetaType::Double, 0x00495103,
+       5, QMetaType::Double, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -45,48 +74,49 @@ static const uint qt_meta_data_core__Index[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_core__Index[] = {
-    "core::Index\0\0borneFavChanged()\0"
-    "borneUnfavChanged()\0double\0borneFav\0"
-    "borneUnfav\0"
-};
-
 void core::Index::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         Index *_t = static_cast<Index *>(_o);
         switch (_id) {
         case 0: _t->borneFavChanged(); break;
         case 1: _t->borneUnfavChanged(); break;
         default: ;
         }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        void **func = reinterpret_cast<void **>(_a[1]);
+        {
+            typedef void (Index::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Index::borneFavChanged)) {
+                *result = 0;
+            }
+        }
+        {
+            typedef void (Index::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Index::borneUnfavChanged)) {
+                *result = 1;
+            }
+        }
     }
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData core::Index::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
-
 const QMetaObject core::Index::staticMetaObject = {
-    { &Value::staticMetaObject, qt_meta_stringdata_core__Index,
-      qt_meta_data_core__Index, &staticMetaObjectExtraData }
+    { &Value::staticMetaObject, qt_meta_stringdata_core__Index.data,
+      qt_meta_data_core__Index,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &core::Index::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *core::Index::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
 void *core::Index::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_core__Index))
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_core__Index.stringdata))
         return static_cast<void*>(const_cast< Index*>(this));
     return Value::qt_metacast(_clname);
 }
@@ -100,6 +130,10 @@ int core::Index::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 2;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 2)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 2;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
@@ -107,6 +141,7 @@ int core::Index::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: *reinterpret_cast< double*>(_v) = getBorneFav(); break;
         case 1: *reinterpret_cast< double*>(_v) = getBorneUnfav(); break;
+        default: break;
         }
         _id -= 2;
     } else if (_c == QMetaObject::WriteProperty) {
@@ -114,6 +149,7 @@ int core::Index::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: setBorneFav(*reinterpret_cast< double*>(_v)); break;
         case 1: setBorneUnfav(*reinterpret_cast< double*>(_v)); break;
+        default: break;
         }
         _id -= 2;
     } else if (_c == QMetaObject::ResetProperty) {
@@ -128,6 +164,10 @@ int core::Index::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyUser) {
         _id -= 2;
+    } else if (_c == QMetaObject::RegisterPropertyMetaType) {
+        if (_id < 2)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 2;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -136,12 +176,12 @@ int core::Index::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void core::Index::borneFavChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, 0);
+    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 
 // SIGNAL 1
 void core::Index::borneUnfavChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, 0);
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE
