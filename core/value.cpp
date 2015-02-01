@@ -1,30 +1,34 @@
 #include "value.hpp"
-int Value::id = 0;
+using namespace core;
+int Value::count = 0;
 Value::Value(){
+	Value::count ++;
+	id = Value::count;
 	parentId = 0;
 	value = 0.0;
 	weigth = 0.0;
-	id++;
 }
 Value::Value(QString name, int parentId, double weigth, double value){
+	Value::count ++;
+	id = Value::count;
 	this->name = name;	
 	this->parentId = parentId;
 	this->weigth = weigth;
 	this->value = value;
-	id++
 }
 Value::Value(const Value &v){
+	this->id = v.id;
 	this->name = v.name;	
-	this->parentId = v.getParentId();
-	this->weigth = v.getWeight();
-	this->value = v.getValue();
-	id++;
+	this->parentId = v.parentId;
+	this->weigth = v.weigth;
+	this->value = v.value;
 }
 Value& Value::operator=(const Value &v){
-	this->name = v.getName();
-	this->parentId = v.getParentId();
-	this->weigth = v.getWeight();
-	this->value = v.getValue();
+	this->id = v.id;
+	this->name = v.name;	
+	this->parentId = v.parentId;
+	this->weigth = v.weigth;
+	this->value = v.value;
 	return *(this);
 }
 int Value::getParentId() const{
@@ -36,18 +40,25 @@ double Value::getWeight() const{
 double Value::getValue() const{
 	return value;
 }
-QString Value::getName() const{
+const QString& Value::getName() const{
 	return name;
 }
 void Value::setParentId(int parentId){
 	this->parentId = parentId;
+	emit parentIdChanged();
 }
 void Value::setValue(double value){
 	this->value = value;
+	emit valueChanged();
 }
 void Value::setWeight(double weigth){
 	this->weigth = weigth;
+	emit weightChanged();
 }
 void Value::setName(QString name){
 	this->name = name;
+	emit nameChanged();
+}
+void Value::setId(int id){
+	this->id = id;
 }

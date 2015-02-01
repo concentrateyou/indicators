@@ -1,31 +1,34 @@
 #include "indicator.hpp"
 using namespace core;
-Indicator::Indicator(){}
+Indicator::Indicator(){
+	id = 0;
+}
 
 Indicator::Indicator(const Indicator &i){
-	name = i.getName();
-	value = i.getValue();
-	for(int ii = 0; ii < childs.size(); ii++){
-		childs[ii] = i.getChild(ii);
-	}
+	id = i.id;
+	name = i.name;
+	value = i.value;
+	this->childs = i.childs;
 }
 Indicator::Indicator(QString n, double v):name(n),value(v){}
 
 Indicator& Indicator::operator=(const Indicator &i){
-	name = i.getName();
-	value = i.getValue();
-	for(int i = 0; i < childs.size(); i++){
-		childs[i] = i.getChilds(i);
-	}
+	id = i.id;
+	name = i.name;
+	value = i.value;
+	this->childs = i.childs;
 	return *(this);
 }
-void Indicator::setValue(double){
+void Indicator::setValue(double value){
 	this->value = value;
+	emit valueChanged();
 }
 void Indicator::setName(QString name){
 	this->name = name;
+	emit nameChanged();
+
 }
-QString Indicator::getName() const{
+const QString& Indicator::getName() const{
 	return name;
 }
 double Indicator::getValue() const{
@@ -33,15 +36,59 @@ double Indicator::getValue() const{
 }
 void Indicator::addChild(int idChild){
 	childs.push_back(idChild);
+	emit childsChanged();
 }
-QVector<int>& Indicator::getChilds(){
+const QVector<int>& Indicator::getChilds() const{
 	return childs;
 }
-int Indicator::getChild(int index){
-	if(index >= 0 && index < childs.size())
-		return childs[index]; 
+int Indicator::getChild(int index) const{
+	for (int i = 0; i < childs.size(); ++i)
+	{
+		if(index == childs[i])
+			return childs[i];
+	}
+	return -1;
+		
 }
-void Indicator::removeChild(int index){
-	if(index >= 0 && index < childs.size())
-		childs.remove(index);
+int Indicator::getId() const{
+	return id;
+}
+bool Indicator::removeChild(int index){
+	for (int i = 0; i < childs.size(); ++i)
+	{
+		if(index == childs[i]){
+			childs.remove(i);
+			return true;
+		}
+	}
+	return false;
+}
+void Indicator::setId(int id){
+	this->id = id;
+}
+void Indicator::setChilds(QVector<int>& childs){
+	this->childs = childs;
+}
+QDataStream& operator>>(QDataStream& in, Indicator& i){
+	QString name;
+	double value;
+	QVector<int> childs;
+	int child;
+	int id;
+	in >> id;
+	i.setId(id);
+	in >> name;
+	i.setName(name);
+	in >> value;
+	i.setValue(value);
+	in >> childs;
+	i.setChilds(childs);
+	return in;
+}
+QDataStream& operator<<(QDataStream& out, Indicator& i){
+	out << i.getId();
+	out << i.getName();
+	out << i.getValue();
+	out << i.getChilds();
+	return out;
 }
