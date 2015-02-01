@@ -4,6 +4,7 @@
 #include "index.hpp"
 #include "module.hpp"
 #include <QMap>
+#include <QList>
 namespace core {
 	enum Format {
 		XML,
@@ -12,14 +13,12 @@ namespace core {
 		CSV,
 		EXCEL
 	};
-	typedef QMap<int, Module> modulGroup;
-	typedef QMap<int, Index> indexGroup;
 
 	class Application : public QObject{
 		Q_OBJECT
-   		Q_PROPERTY(Indicator indicator READ getIndicator NOTIFY indicatorChanged)
-   		Q_PROPERTY(modulGroup moduls READ getModuls NOTIFY modulChanged)
-   		Q_PROPERTY(indexGroup indexes READ getIndexes NOTIFY indexChanged)
+   		Q_PROPERTY(QObject* indicator READ getIndicatorForQML NOTIFY indicatorChanged)
+   		Q_PROPERTY(QList<QObject*> indexes READ getIndexesForQML NOTIFY indexChanged)
+   		Q_PROPERTY(QList<QObject*> modules READ getModulsForQML NOTIFY modulChanged)
 	private:
 		Indicator indicator;
 		QMap<int, Module> moduls;
@@ -28,6 +27,9 @@ namespace core {
 		const QMap<int, Module>& getModuls() const;
 		const QMap<int, Index>& getIndexes() const;
 		const Indicator& getIndicator() const;
+		QList<QObject*> getIndexesForQML() ;
+	 	QList<QObject*> getModulsForQML();
+	 	QObject* getIndicatorForQML();	
 	public slots:
 		void init();
 		void create(QString);
