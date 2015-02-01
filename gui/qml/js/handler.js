@@ -2,11 +2,12 @@ var userComponent = null;
 var users = [];
 function init() {
 	console.log("Starting ... ");
-	userComponent = Qt.createComponent("../user.qml");
-	if(userComponent.status != Component.Ready)
-		if( userComponent.status == Component.Error)
-	        console.debug("Error:"+ userComponent.errorString() );
+	// userComponent = Qt.createComponent("../user.qml");
+	// if(userComponent.status != Component.Ready)
+	// 	if( userComponent.status == Component.Error)
+	//         console.debug("Error:"+ userComponent.errorString() );
 	app.load('data');
+	console.log('Name: ' + app.root.name);
 }
 
 function add(name){
@@ -18,17 +19,17 @@ function add(name){
 }
 
 function showUsers(){
-	console.log("Showing users");
+	// console.log("Showing users");
 	// Cleaning existing 
-	for(var i = 0; i < users.length; i++)
-		if(users[i] != null)
-			users[i].destroy();
-	users = [];
-	for(var i in app.users) {
-		var d = userComponent.createObject(content);
-		d.num = app.users[i].num;
-		d.name = app.users[i].name;
-		users.push(d);
-	}
-	app.save('data');
+	// for(var i = 0; i < users.length; i++)
+	// 	if(users[i] != null)
+	// 		users[i].destroy();
+	// users = [];
+	// for(var i in app.users) {
+	// 	var d = userComponent.createObject(content);
+	// 	d.num = app.users[i].num;
+	// 	d.name = app.users[i].name;
+	// 	users.push(d);
+	// }
+	// app.save('data');
 }

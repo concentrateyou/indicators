@@ -21,7 +21,7 @@ public:
 	const QString& getName() const;
 	void setName(const QString& name );
 	int getId() const;
-	void TestIndicator(int id) { 
+	void setId(int id) { 
 		id_ = id;
 		if(User::count_ < id)
 			User::count_ = id;

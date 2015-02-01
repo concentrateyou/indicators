@@ -10,6 +10,7 @@
 class App : public QObject {
     Q_OBJECT
     Q_PROPERTY(QList<QObject*> users READ getUsersForQML NOTIFY changed)
+    Q_PROPERTY(QObject* root READ getRootForQML NOTIFY changed)
 private:
 	QMap<int,User> users_;
 public:
@@ -24,6 +25,15 @@ public:
 			++ it;
 		}
 		return list;
+	}
+	QObject* getRootForQML() {
+		QMap<int,User>::iterator it = users_.begin();
+		while(it != users_.end()){
+			User& r = *it;
+			User* p = &r;
+			return p;
+		}
+		return 0;
 	}
 	void show(){
 		qDebug() << "Data:";

@@ -51,5 +51,7 @@ ApplicationWindow {
         }
     }
 
-    // Component.onCompleted: Handler.init()
+    Component.onCompleted: {
+        Handler.init()
+    }
 }

@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_App_t {
-    QByteArrayData data[13];
-    char stringdata[86];
+    QByteArrayData data[14];
+    char stringdata[91];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,12 +42,13 @@ QT_MOC_LITERAL(8, 45, 4), // "name"
 QT_MOC_LITERAL(9, 50, 10), // "removeName"
 QT_MOC_LITERAL(10, 61, 2), // "id"
 QT_MOC_LITERAL(11, 64, 5), // "users"
-QT_MOC_LITERAL(12, 70, 15) // "QList<QObject*>"
+QT_MOC_LITERAL(12, 70, 15), // "QList<QObject*>"
+QT_MOC_LITERAL(13, 86, 4) // "root"
 
     },
     "App\0changed\0\0init\0load\0filename\0save\0"
     "addName\0name\0removeName\0id\0users\0"
-    "QList<QObject*>"
+    "QList<QObject*>\0root"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +59,7 @@ static const uint qt_meta_data_App[] = {
        0,       // classname
        0,    0, // classinfo
        6,   14, // methods
-       1,   58, // properties
+       2,   58, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -86,8 +87,10 @@ static const uint qt_meta_data_App[] = {
 
  // properties: name, type, flags
       11, 0x80000000 | 12, 0x00495009,
+      13, QMetaType::QObjectStar, 0x00495001,
 
  // properties: notify_signal_id
+       0,
        0,
 
        0        // eod
@@ -163,27 +166,28 @@ int App::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< QList<QObject*>*>(_v) = getUsersForQML(); break;
+        case 1: *reinterpret_cast< QObject**>(_v) = getRootForQML(); break;
         default: break;
         }
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::WriteProperty) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::ResetProperty) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
