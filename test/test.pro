@@ -1,5 +1,5 @@
 TARGET = ../build/test
-QT += testlib
+QT += testlib core
 SOURCES = testIndicator.cpp
 INCLUDEPATH += ../core
 LIBS += -L../core -lcore
