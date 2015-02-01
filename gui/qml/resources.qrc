@@ -1,7 +1,9 @@
 <RCC>
 	<qresource prefix="/">
 		<file>main.qml</file>
-		<file>user.qml</file>
+		<file>User.qml</file>
+		<file>Block.qml</file>
+		<file>MiniButton.qml</file>
 		<file>js/handler.js</file>
 	</qresource>
 </RCC>

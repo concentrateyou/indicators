@@ -4,8 +4,6 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 
-import Indicators.Models 1.0
-
 RowLayout {
     property int num
     property string name

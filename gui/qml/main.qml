@@ -35,19 +35,9 @@ ApplicationWindow {
 
     ColumnLayout {
         id: content
-        RowLayout {
-            height: 60
-            TextField {
-                id: nameTxt
-                width: 500
-                placeholderText: qsTr("Enter name")
-            }
-            Button {
-                id: addBtn
-                width: 100
-                text: qsTr("Ajouter")
-                onClicked : Handler.add(nameTxt.text)
-            }
+        anchors.fill: parent
+        Block {
+
         }
     }
 
@@ -61,5 +51,5 @@ ApplicationWindow {
         }
     }
 
-    Component.onCompleted: Handler.init()
+    // Component.onCompleted: Handler.init()
 }

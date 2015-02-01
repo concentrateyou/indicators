@@ -509,7 +509,9 @@ compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_resources.cpp
 qrc_resources.cpp: qml/resources.qrc \
-		qml/user.qml \
+		qml/User.qml \
+		qml/Block.qml \
+		qml/MiniButton.qml \
 		qml/main.qml \
 		qml/js/handler.js
 	/home/webneat/softwares/Qt/5.4/gcc_64/bin/rcc -name resources qml/resources.qrc -o qrc_resources.cpp
@@ -584,6 +586,11 @@ moc_app.cpp: /home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qset.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDebug \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QList \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QQmlListProperty \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmllist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qtqmlglobal.h \
 		src/user.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
@@ -731,6 +738,11 @@ app.o: src/app.cpp src/app.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qpoint.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qset.h \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDebug \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QList \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QQmlListProperty \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qqmllist.h \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/qtqmlglobal.h \
 		src/user.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QString \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QObject \
@@ -1037,6 +1049,8 @@ main.o: src/main.cpp /home/webneat/softwares/Qt/5.4/gcc_64/include/QtWidgets/QAp
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QtDebug \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QMap \
 		src/app.hpp \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDebug \
+		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtQml/QQmlListProperty \
 		src/user.hpp \
 		/home/webneat/softwares/Qt/5.4/gcc_64/include/QtCore/QDataStream
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
