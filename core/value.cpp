@@ -34,6 +34,9 @@ Value& Value::operator=(const Value &v){
 int Value::getParentId() const{
 	return parentId;
 }
+int Value::getId() const{
+	return id;
+}
 double Value::getWeight() const{
 	return weigth;
 }

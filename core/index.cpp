@@ -29,7 +29,7 @@ void Index::setBorneUnfav(double borneUnfav){
 	this->borneUnfav = borneUnfav;
 	emit borneUnfavChanged();
 }
-QDataStream& operator>>(QDataStream& in, Index& index){
+QDataStream& core::operator>>(QDataStream& in, Index& index){
 	int id, parentId;
 	QString name;
 	double value, weight, borneFav, borneUnfav;
@@ -49,7 +49,7 @@ QDataStream& operator>>(QDataStream& in, Index& index){
 	index.setBorneUnfav(borneUnfav);
 	return in;
 }
-QDataStream& operator<<(QDataStream& out, const Index& index){
+QDataStream& core::operator<<(QDataStream& out, const Index& index){
 	out << index.getId();
 	out << index.getParentId();
 	out << index.getName();

@@ -16,10 +16,24 @@ ApplicationWindow {
 
     menuBar: MenuBar {
         Menu {
-            title: qsTr("&File")
+            title: "&File"
             MenuItem {
-                text: qsTr("&Open")
-                onTriggered: messageDialog.show(qsTr("Open action triggered"));
+                text: "&New Indicator"
+                onTriggered: indicatorForm.open()
+            }
+            MenuItem {
+                text: "&Save Indicator"
+                onTriggered: {
+                	Handler.setAction('save');
+                	fileDialog.open();
+                }
+            }
+            MenuItem {
+                text: "L&oad Indicator"
+                onTriggered: {
+                	Handler.setAction('load');
+                	fileDialog.open();
+                }
             }
             MenuItem {
                 text: qsTr("E&xit")
@@ -30,15 +44,13 @@ ApplicationWindow {
 
     App {
         id: app
-        onChanged: Handler.showUsers()
+        onChanged: Handler.render()
     }
 
-    ColumnLayout {
+    Rectangle {
         id: content
+        color: "#cccccc"
         anchors.fill: parent
-        Block {
-
-        }
     }
 
     MessageDialog {
@@ -51,7 +63,35 @@ ApplicationWindow {
         }
     }
 
+    IndicatorForm {
+    	id: indicatorForm
+        onAccepted: {
+        	if( nameField != '')
+        		Handler.createIndicator(nameField);
+        	else
+        		indicatorForm.open();
+        }
+    }
+
+    IndexForm {
+    	id: indexForm
+        onAccepted: {
+        	Handler.submitIndex(parentId, num, nameField, weightField, borneFField, borneUField, valueField);
+    	}
+    }
+
+    FileDialog {
+    	id: fileDialog
+    	title: "Please choose where to save"
+		onAccepted: {
+			Handler.doAction(fileDialog.fileUrl)
+		}
+    }
+
     Component.onCompleted: {
         Handler.init()
     }
+    onWidthChanged : Handler.render()
+    onHeightChanged : Handler.render()
+
 }

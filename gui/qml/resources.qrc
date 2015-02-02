@@ -1,9 +1,10 @@
 <RCC>
 	<qresource prefix="/">
 		<file>main.qml</file>
-		<file>User.qml</file>
 		<file>Block.qml</file>
 		<file>MiniButton.qml</file>
+		<file>IndicatorForm.qml</file>
+		<file>IndexForm.qml</file>
 		<file>js/handler.js</file>
 	</qresource>
 </RCC>

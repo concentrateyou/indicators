@@ -5,7 +5,21 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 
 Rectangle {
-	
+	property alias name: nameTxt.text
+	property alias withClose: closeBtn.visible
+	property alias withIndexAdd: indexAddBtn.visible
+	property alias withModuleAdd: moduleAddBtn.visible
+
+	property bool withReduce: true
+	property bool isReduced: true
+	property int num
+	property string type
+
+	signal closed
+	signal reduced
+	signal expand
+	signal indexAddClicked
+	signal moduleAddClicked
 
 	color: '#eee'
 	width: {
@@ -16,7 +30,6 @@ Rectangle {
 	height: 70
 	border.width: 2
 	border.color: '#000000'
-	anchors.centerIn: parent
 
 	RowLayout {
 		id: topMenu
@@ -28,35 +41,47 @@ Rectangle {
 			width: 2
 		}
 		MiniButton {
+			id: moduleAddBtn
 			text: '+M'
 			normalColor: '#15AF17'
 			hoverColor: '#60E959'
-			area.onClicked : {
-				console.log('I am clicked !')
-			}
+			area.onClicked : moduleAddClicked()
 		}
 		MiniButton {
-			visible: false
+			id: indexAddBtn
 			text: '+I'
 			normalColor: '#15AF17'
 			hoverColor: '#60E959'
+			area.onClicked : indexAddClicked()
 		}
 		MiniButton {
+			id: reduceBtn
 			text: '-'
 			normalColor: '#39A0D1'
 			hoverColor: '#69C0D1'
-			area.onClicked : {
-				console.log('I am clicked !')
+			area.onClicked : { 
+				reduced();
+				isReduced = true;
 			}
+			visible: ( withReduce && !isReduced )
+		}
+		MiniButton {
+			id: expandBtn
+			text: '+'
+			normalColor: '#39A0D1'
+			hoverColor: '#69C0D1'
+			area.onClicked : {
+				expand();
+				isReduced = false;
+			}
+			visible: ( withReduce && isReduced )
 		}
 		MiniButton {
 			id: closeBtn
 			text: 'X'
 			normalColor: '#E63434'
 			hoverColor: '#FF8D8D'
-			area.onClicked : {
-				console.log('I am clicked !')
-			}
+			area.onClicked : closed()
 		}
 		Item { 
 			width: 2
@@ -71,6 +96,7 @@ Rectangle {
 			width: 2
 		}
 		Text {
+			id: nameTxt
 			anchors.centerIn: parent
 			text: 'My Name is very long'
 		}

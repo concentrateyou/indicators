@@ -5,6 +5,7 @@
 #include "module.hpp"
 #include <QMap>
 #include <QList>
+#include <QDebug>
 namespace core {
 	enum Format {
 		XML,
@@ -16,9 +17,9 @@ namespace core {
 
 	class Application : public QObject{
 		Q_OBJECT
-   		Q_PROPERTY(QObject* indicator READ getIndicatorForQML NOTIFY indicatorChanged)
-   		Q_PROPERTY(QList<QObject*> indexes READ getIndexesForQML NOTIFY indexChanged)
-   		Q_PROPERTY(QList<QObject*> modules READ getModulsForQML NOTIFY modulChanged)
+   		Q_PROPERTY(QObject* indicator READ getIndicatorForQML NOTIFY changed)
+   		Q_PROPERTY(QList<QObject*> indexes READ getIndexesForQML NOTIFY changed)
+   		Q_PROPERTY(QList<QObject*> modules READ getModulsForQML NOTIFY changed)
 	private:
 		Indicator indicator;
 		QMap<int, Module> moduls;
@@ -46,11 +47,7 @@ namespace core {
 		bool removeModule(int);
 		void editModule(int, QString, double);
 	signals:
-		void indicatorChanged();
-		void indexChanged();
-		void modulChanged();
-
-		
+		void changed();
 	};	
 }
 

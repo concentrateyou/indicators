@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_core__Value_t {
-    QByteArrayData data[10];
-    char stringdata[95];
+    QByteArrayData data[11];
+    char stringdata[99];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,15 +35,16 @@ QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 12), // "valueChanged"
 QT_MOC_LITERAL(4, 38, 13), // "weightChanged"
 QT_MOC_LITERAL(5, 52, 15), // "parentIdChanged"
-QT_MOC_LITERAL(6, 68, 4), // "name"
-QT_MOC_LITERAL(7, 73, 5), // "value"
-QT_MOC_LITERAL(8, 79, 6), // "weigth"
-QT_MOC_LITERAL(9, 86, 8) // "parentId"
+QT_MOC_LITERAL(6, 68, 3), // "num"
+QT_MOC_LITERAL(7, 72, 4), // "name"
+QT_MOC_LITERAL(8, 77, 5), // "value"
+QT_MOC_LITERAL(9, 83, 6), // "weight"
+QT_MOC_LITERAL(10, 90, 8) // "parentId"
 
     },
     "core::Value\0nameChanged\0\0valueChanged\0"
-    "weightChanged\0parentIdChanged\0name\0"
-    "value\0weigth\0parentId"
+    "weightChanged\0parentIdChanged\0num\0"
+    "name\0value\0weight\0parentId"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +55,7 @@ static const uint qt_meta_data_core__Value[] = {
        0,       // classname
        0,    0, // classinfo
        4,   14, // methods
-       4,   38, // properties
+       5,   38, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -73,12 +74,14 @@ static const uint qt_meta_data_core__Value[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-       6, QMetaType::QString, 0x00495103,
-       7, QMetaType::Double, 0x00495103,
-       8, QMetaType::Double, 0x00495003,
-       9, QMetaType::Int, 0x00495103,
+       6, QMetaType::Int, 0x00095001,
+       7, QMetaType::QString, 0x00495103,
+       8, QMetaType::Double, 0x00495103,
+       9, QMetaType::Double, 0x00495103,
+      10, QMetaType::Int, 0x00495103,
 
  // properties: notify_signal_id
+       0,
        0,
        1,
        2,
@@ -166,39 +169,40 @@ int core::Value::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
       else if (_c == QMetaObject::ReadProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< QString*>(_v) = getName(); break;
-        case 1: *reinterpret_cast< double*>(_v) = getValue(); break;
-        case 2: *reinterpret_cast< double*>(_v) = getWeight(); break;
-        case 3: *reinterpret_cast< int*>(_v) = getParentId(); break;
+        case 0: *reinterpret_cast< int*>(_v) = getId(); break;
+        case 1: *reinterpret_cast< QString*>(_v) = getName(); break;
+        case 2: *reinterpret_cast< double*>(_v) = getValue(); break;
+        case 3: *reinterpret_cast< double*>(_v) = getWeight(); break;
+        case 4: *reinterpret_cast< int*>(_v) = getParentId(); break;
         default: break;
         }
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::WriteProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: setName(*reinterpret_cast< QString*>(_v)); break;
-        case 1: setValue(*reinterpret_cast< double*>(_v)); break;
-        case 2: setWeight(*reinterpret_cast< double*>(_v)); break;
-        case 3: setParentId(*reinterpret_cast< int*>(_v)); break;
+        case 1: setName(*reinterpret_cast< QString*>(_v)); break;
+        case 2: setValue(*reinterpret_cast< double*>(_v)); break;
+        case 3: setWeight(*reinterpret_cast< double*>(_v)); break;
+        case 4: setParentId(*reinterpret_cast< int*>(_v)); break;
         default: break;
         }
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::ResetProperty) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 5;
     }
 #endif // QT_NO_PROPERTIES
     return _id;

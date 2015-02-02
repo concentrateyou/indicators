@@ -9,7 +9,7 @@ namespace core {
 		Q_PROPERTY(int num READ getId)
 		Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
 		Q_PROPERTY(double value READ getValue WRITE setValue NOTIFY valueChanged)
-		Q_PROPERTY(double weigth READ getWeight WRITE setWeight NOTIFY weightChanged)
+		Q_PROPERTY(double weight READ getWeight WRITE setWeight NOTIFY weightChanged)
 		Q_PROPERTY(int parentId READ getParentId WRITE setParentId NOTIFY parentIdChanged)
 
 	protected:

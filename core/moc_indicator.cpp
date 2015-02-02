@@ -9,7 +9,7 @@
 #include "indicator.hpp"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
-#include <QtCore/QVector>
+#include <QtCore/QList>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'indicator.hpp' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -21,7 +21,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_core__Indicator_t {
     QByteArrayData data[9];
-    char stringdata[87];
+    char stringdata[85];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,12 +38,12 @@ QT_MOC_LITERAL(4, 42, 13), // "childsChanged"
 QT_MOC_LITERAL(5, 56, 4), // "name"
 QT_MOC_LITERAL(6, 61, 5), // "value"
 QT_MOC_LITERAL(7, 67, 6), // "childs"
-QT_MOC_LITERAL(8, 74, 12) // "QVector<int>"
+QT_MOC_LITERAL(8, 74, 10) // "QList<int>"
 
     },
     "core::Indicator\0nameChanged\0\0valueChanged\0"
     "childsChanged\0name\0value\0childs\0"
-    "QVector<int>"
+    "QList<int>"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +73,7 @@ static const uint qt_meta_data_core__Indicator[] = {
  // properties: name, type, flags
        5, QMetaType::QString, 0x00495103,
        6, QMetaType::Double, 0x00495103,
-       7, 0x80000000 | 8, 0x0049510b,
+       7, 0x80000000 | 8, 0x00495009,
 
  // properties: notify_signal_id
        0,
@@ -118,7 +118,7 @@ void core::Indicator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
         case 2:
-            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<int> >(); break;
+            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<int> >(); break;
         }
     }
 
@@ -163,7 +163,7 @@ int core::Indicator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: *reinterpret_cast< QString*>(_v) = getName(); break;
         case 1: *reinterpret_cast< double*>(_v) = getValue(); break;
-        case 2: *reinterpret_cast< QVector<int>*>(_v) = getChilds(); break;
+        case 2: *reinterpret_cast< QList<int>*>(_v) = getChildsForQML(); break;
         default: break;
         }
         _id -= 3;
@@ -172,7 +172,6 @@ int core::Indicator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: setName(*reinterpret_cast< QString*>(_v)); break;
         case 1: setValue(*reinterpret_cast< double*>(_v)); break;
-        case 2: setChilds(*reinterpret_cast< QVector<int>*>(_v)); break;
         default: break;
         }
         _id -= 3;

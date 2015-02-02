@@ -7,8 +7,6 @@
 using namespace core;
 
 int main(int argc, char** argv){
-	// qRegisterMetaType<User>("User");
-
 	QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     

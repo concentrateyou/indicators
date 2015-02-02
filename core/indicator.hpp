@@ -2,6 +2,7 @@
 #define INDICATOR_H 1
 #include <QString>
 #include <QVector>
+#include <QList>
 #include <QObject>
 #include <QDataStream>
 namespace core {
@@ -9,7 +10,7 @@ namespace core {
 		Q_OBJECT
 		Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
 		Q_PROPERTY(double value READ getValue WRITE setValue NOTIFY valueChanged)
-		Q_PROPERTY(QVector<int> childs READ getChilds WRITE setChilds NOTIFY childsChanged)
+		Q_PROPERTY(QList<int> childs READ getChildsForQML NOTIFY childsChanged)
 		
 	
 	private:
@@ -30,6 +31,7 @@ namespace core {
 		double getValue() const;
 		const QString& getName() const;
 		const QVector<int>& getChilds() const;
+		QList<int> getChildsForQML();
 		int getChild(int) const;
 		int getId() const;
 		bool removeChild(int);

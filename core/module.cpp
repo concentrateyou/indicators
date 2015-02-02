@@ -38,7 +38,7 @@ const QVector<int>& Module::getChilds() const{
 void Module::setChilds(QVector<int>& childs){
 	this->childs = childs;
 }
-QDataStream& operator>>(QDataStream& in, Module& module){
+QDataStream& core::operator>>(QDataStream& in, Module& module){
 	int id, parentId;
 	QString name;
 	double value, weight;
@@ -58,7 +58,7 @@ QDataStream& operator>>(QDataStream& in, Module& module){
 	module.setChilds(childs);
 	return in;
 }
-QDataStream& operator<<(QDataStream& out, const Module& module){
+QDataStream& core::operator<<(QDataStream& out, const Module& module){
 	out << module.getId();
 	out << module.getParentId();
 	out << module.getName();

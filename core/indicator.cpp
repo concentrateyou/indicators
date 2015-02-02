@@ -1,5 +1,6 @@
 #include "indicator.hpp"
 using namespace core;
+
 Indicator::Indicator(){
 	id = 0;
 }
@@ -69,7 +70,7 @@ void Indicator::setId(int id){
 void Indicator::setChilds(QVector<int>& childs){
 	this->childs = childs;
 }
-QDataStream& operator>>(QDataStream& in, Indicator& i){
+QDataStream& core::operator>>(QDataStream& in, Indicator& i){
 	QString name;
 	double value;
 	QVector<int> childs;
@@ -85,10 +86,14 @@ QDataStream& operator>>(QDataStream& in, Indicator& i){
 	i.setChilds(childs);
 	return in;
 }
-QDataStream& operator<<(QDataStream& out, Indicator& i){
+QDataStream& core::operator<<(QDataStream& out, Indicator& i){
 	out << i.getId();
 	out << i.getName();
 	out << i.getValue();
 	out << i.getChilds();
 	return out;
+}
+
+QList<int> Indicator::getChildsForQML(){
+	return childs.toList();
 }

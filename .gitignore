@@ -1,4 +1,8 @@
-**/*.moc
+**/moc_*
 **/*.o
 **/*.a
 build/*
+core/Makefile
+gui/Makefile
+test/Makefile
+Makefile
