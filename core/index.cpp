@@ -16,7 +16,7 @@ Index& Index::operator=(const Index &i){
 	return *(this);
 }
 double Index::getBorneFav() const{
-	return borneUnfav;
+	return borneFav;
 }
 double Index::getBorneUnfav() const{
 	return borneUnfav;

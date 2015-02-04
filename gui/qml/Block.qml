@@ -5,6 +5,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 
 Rectangle {
+	id: block
 	property alias name: nameTxt.text
 	property alias withClose: closeBtn.visible
 	property alias withIndexAdd: indexAddBtn.visible
@@ -20,6 +21,7 @@ Rectangle {
 	signal expand
 	signal indexAddClicked
 	signal moduleAddClicked
+	signal doubleClicked
 
 	color: '#eee'
 	width: {
@@ -98,10 +100,25 @@ Rectangle {
 		Text {
 			id: nameTxt
 			anchors.centerIn: parent
-			text: 'My Name is very long'
+			text: 'Unknown'
 		}
 		Item { 
 			width: 2
+		}
+
+		MouseArea {
+			id: area
+			anchors.fill: parent
+			hoverEnabled: true
+			onEntered: { 
+				block.color = '#eeeeee';
+				block.border.color = '#39A0D1';
+			}
+			onExited: {
+				block.color = '#dddddd';
+				block.border.color = '#000000';
+			}
+			onDoubleClicked: block.doubleClicked()
 		}
 	}
 }

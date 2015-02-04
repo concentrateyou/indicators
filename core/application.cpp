@@ -57,17 +57,27 @@ void Application::addIndex(QString name, int parentId, double weight, double val
 
 }
 bool Application::removeIndex(int id){
-	bool result;
-	if(indicator.getChild(id) != -1){
-		if(indexes.remove(id) != 0)
-			if(indicator.removeChild(id) == true)
-				result = true;
-			else
-				result = false;
+	bool result = false;
+	qDebug() << "removing index:" << id;
+	if(indexes.contains(id)){
+		int pid = indexes[id].getParentId(); 
+		if(pid == 0)
+			indicator.removeChild(id);
 		else
-			result = false;
-	} else
-		result = false;
+			moduls[pid].removeChild(id);
+		indexes.remove(id);
+		result = true;
+	}
+	// if(indicator.getChild(id) != -1){
+	// 	if(indexes.remove(id) != 0)
+	// 		if(indicator.removeChild(id) == true)
+	// 			result = true;
+	// 		else
+	// 			result = false;
+	// 	else
+	// 		result = false;
+	// } else
+	// 	result = false;
 
 	if(result)
 		emit changed();
@@ -97,18 +107,32 @@ void Application::addModule(QString name, int parentId, double weight, double va
 	emit changed();
 }
 bool Application::removeModule(int id){
-	if(indicator.getChild(id) != -1){
-		if(moduls.remove(id) != 0){
-			if(indicator.removeChild(id) == true)
-				return true;
-			else
-				return false;
+	// if(indicator.getChild(id) != -1){
+	// 	if(moduls.remove(id) != 0){
+	// 		if(indicator.removeChild(id) == true)
+	// 			return true;
+	// 		else
+	// 			return false;
 
-		}else{
-			return false;
-		}
-	}else
-		return false;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }else
+	// 	return false;
+	bool result = false;
+	qDebug() << "removing module:" << id;
+	if(moduls.contains(id)){
+		int pid = moduls[id].getParentId(); 
+		if(pid == 0)
+			indicator.removeChild(id);
+		else
+			moduls[pid].removeChild(id);
+		moduls.remove(id);
+		result = true;
+	}
+	if(result)
+		emit changed();
+	return result;
 }
 void Application::editModule(int id, QString name, double weight){
 	if(moduls.contains(id)){
@@ -136,7 +160,6 @@ QList<QObject*> Application::getIndexesForQML() {
 		list.append(pindex);
 		++ it;
 	}
-	qDebug() << "The size of indexes is : " << list.size();
 	return list;
 }
 QList<QObject*> Application::getModulsForQML() {
@@ -152,5 +175,6 @@ QList<QObject*> Application::getModulsForQML() {
 }
 
 QObject* Application::getIndicatorForQML() {
+	qDebug() << "Indicator Requested !";
 	return &indicator;
 }

@@ -3,12 +3,13 @@
 
 #include "value.hpp"
 #include <QVector>
+#include <QList>
 #include <QObject>
 #include <QDataStream>
 namespace core {
 	class Module : public Value{
 		Q_OBJECT
-   		Q_PROPERTY(QVector<int> childs READ getChilds WRITE setChilds NOTIFY childsChanged)
+   		Q_PROPERTY(QList<int> childs READ getChildsForQML NOTIFY childsChanged)
 	
 	private:
 		QVector<int> childs; 
@@ -21,6 +22,7 @@ namespace core {
 		bool removeChild(int);
 		int getChild(int) const;
 		const QVector<int>& getChilds() const;
+		QList<int> getChildsForQML();
 		void setChilds(QVector<int>& childs);
 	signals:
 		void childsChanged();

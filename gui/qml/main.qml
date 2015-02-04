@@ -79,7 +79,13 @@ ApplicationWindow {
         	Handler.submitIndex(parentId, num, nameField, weightField, borneFField, borneUField, valueField);
     	}
     }
-
+    
+    ModuleForm {
+    	id: moduleForm
+        onAccepted: {
+        	Handler.submitModule(parentId, num, nameField, weightField);
+    	}
+    }
     FileDialog {
     	id: fileDialog
     	title: "Please choose where to save"

@@ -9,7 +9,7 @@
 #include "module.hpp"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
-#include <QtCore/QVector>
+#include <QtCore/QList>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'module.hpp' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -21,7 +21,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_core__Module_t {
     QByteArrayData data[5];
-    char stringdata[48];
+    char stringdata[46];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,11 +34,11 @@ QT_MOC_LITERAL(0, 0, 12), // "core::Module"
 QT_MOC_LITERAL(1, 13, 13), // "childsChanged"
 QT_MOC_LITERAL(2, 27, 0), // ""
 QT_MOC_LITERAL(3, 28, 6), // "childs"
-QT_MOC_LITERAL(4, 35, 12) // "QVector<int>"
+QT_MOC_LITERAL(4, 35, 10) // "QList<int>"
 
     },
     "core::Module\0childsChanged\0\0childs\0"
-    "QVector<int>"
+    "QList<int>"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,7 +62,7 @@ static const uint qt_meta_data_core__Module[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-       3, 0x80000000 | 4, 0x0049510b,
+       3, 0x80000000 | 4, 0x00495009,
 
  // properties: notify_signal_id
        0,
@@ -91,7 +91,7 @@ void core::Module::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
         case 0:
-            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<int> >(); break;
+            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<int> >(); break;
         }
     }
 
@@ -134,16 +134,11 @@ int core::Module::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
       else if (_c == QMetaObject::ReadProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< QVector<int>*>(_v) = getChilds(); break;
+        case 0: *reinterpret_cast< QList<int>*>(_v) = getChildsForQML(); break;
         default: break;
         }
         _id -= 1;
     } else if (_c == QMetaObject::WriteProperty) {
-        void *_v = _a[0];
-        switch (_id) {
-        case 0: setChilds(*reinterpret_cast< QVector<int>*>(_v)); break;
-        default: break;
-        }
         _id -= 1;
     } else if (_c == QMetaObject::ResetProperty) {
         _id -= 1;
