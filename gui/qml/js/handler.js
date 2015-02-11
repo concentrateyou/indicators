@@ -15,16 +15,20 @@ App : indicator, indexes, modules
 	editModule(int id, QString name, double weight)
 */
 // Global variables
-var builder = null;
+var blockBuilder = null;
+var linkBuilder = null;
 var components = [];
 var action = null;
 var values = {};
 
 // Initialization
 function init() {
-	builder = Qt.createComponent("../Block.qml");
-	if(builder.status != Component.Ready)
-	    console.log("Error: " + builder.errorString());
+	blockBuilder = Qt.createComponent("../Block.qml");
+	if(blockBuilder.status != Component.Ready)
+	    console.log("Error: " + blockBuilder.errorString());
+	linkBuilder = Qt.createComponent("../Link.qml");
+	if(linkBuilder.status != Component.Ready)
+	    console.log("Error: " + linkBuilder.errorString());
 	app.init();
 }
 
@@ -99,21 +103,22 @@ function submitModule(parentId, num, nameField, weightField){
 
 // Design Functions
 // Box Class
-var Box = function(parentId, id, type, name, childs){
+var Box = function(parentId, id, dataId, type, name, childs){
 	this.parentId = parentId;
 	this.id = id;
+	this.dataId = dataId;
 	this.type = type;
 	this.name = name;
 	this.childs = childs;
 	this.component = null;
 	this.totalWidth = 0;
 	this.totalHeight = 0;
-
-	this.makeComponent();
 }
 // Static attributes of Box
 Box.data = {}; // application data
 Box.blocks = {}; // interface blocks
+Box.links = [];
+Box.reduced = [];
 // Static methods of Box
 Box.clear = function (){
 	for(var i in Box.blocks){
@@ -123,7 +128,13 @@ Box.clear = function (){
 			Box.blocks[i].component = null;
 		}
 	}
+	for(var i in Box.links)
+		if(Box.links[i] != null){
+			Box.links[i].visible = false;
+			Box.links[i].destroy();
+		}
 	Box.blocks = {};
+	Box.links = [];
 	content.visible = false;
 	content.visible = true;
 }
@@ -134,25 +145,57 @@ Box.init = function(){
 	Box.data.modules = app.modules;
 	// Creating boxes
 	var i = Box.data.indicator;
-	Box.blocks[0] = new Box(-1, 0, 'indicator', i.name, i.childs);
+	Box.blocks[0] = new Box(-1, 0, 0, 'indicator', i.name, i.childs);
 	for(var key in Box.data.indexes){
 		i = Box.data.indexes[key];
-		Box.blocks[i.num] = new Box(i.parentId, i.num, 'index', i.name + '('+i.num+')', i.childs);
+		Box.blocks[i.num] = new Box(i.parentId, i.num, key, 'index', i.name, i.childs);
 	}
 	for(var key in Box.data.modules){
 		i = Box.data.modules[key];
-		Box.blocks[i.num] = new Box(i.parentId, i.num, 'module', i.name + '('+i.num+')', i.childs);
+		Box.blocks[i.num] = new Box(i.parentId, i.num, key, 'module', i.name, i.childs);
 	}
 }
+Box.indexAt = function(id){
+	return Box.blocks[id];
+}
+Box.moduleAt = function(id){
+	return Box.blocks[id];
+}
+Box.makeComponents = function(){
+	for(var i in Box.blocks)
+		Box.blocks[i].makeComponent();
+}
+Box.computeWH = function(){
+	var wh = Box.blocks[0].getWH();
+	// console.log('tw: ' + wh.w);
+	// console.log('th: ' + wh.h);
+	return wh;
+}
 Box.draw = function(){
-	Box.blocks[0].drawAt(5, 5);
+	Box.makeComponents();
+	var dim = Box.computeWH();
+	content.width = Math.max(content.width, dim.w);
+	content.height = Math.max(content.height, dim.h);
+	Box.blocks[0].drawAt((content.width - dim.w) / 2, 5);
 	content.visible = false;
 	content.visible = true;
+}
+Box.drawLink = function(startX, startY, endX, endY){
+	var temp = Math.min(startX, endX);
+	endX = Math.max(startX, endX);
+	startX = temp;
+	// console.log('link from ('+startX+' , '+startY+' ) to ( '+endX+' , '+endY+' )');
+	var l = linkBuilder.createObject(content);
+	l.x = startX;
+	l.y = startY;
+	l.width = endX - startX + 2;
+	l.height = endY - startY + 2;
+	Box.links.push(l);
 }
 // Instance methods of Box
 Box.prototype.makeComponent = function(){
 	// parentId, id, type, name, childs, component, totalWidth, totalHeight
-	this.component = builder.createObject(content);
+	this.component = blockBuilder.createObject(content);
 	this.component.num = this.id;
 	this.component.name = this.name;
 	this.component.type = this.type;
@@ -170,6 +213,7 @@ Box.prototype.makeComponent = function(){
 	}
 }
 Box.prototype.makeIndicator = function(){
+	var self = this;
 	this.component.withReduce = this.component.withClose = false;
 	this.component.indexAddClicked.connect(function(){
 		indexForm.parentId = 0;
@@ -188,6 +232,10 @@ Box.prototype.makeIndicator = function(){
 		moduleForm.weightField = '';
 		moduleForm.open();
 	});
+	this.component.doubleClicked.connect(function(){
+		// indicatorForm.nameField = self.name;
+		// indicatorForm.open();
+	});
 }
 Box.prototype.makeIndex = function(){
 	var self = this;
@@ -199,18 +247,30 @@ Box.prototype.makeIndex = function(){
 		indexForm.parentId = -1;
 		indexForm.num = self.id;
 		indexForm.nameField = self.name;
-		indexForm.weightField = Block.data.indexes[self.id].weight;
-		indexForm.borneFField = Block.data.indexes[self.id].borneFav;
-		indexForm.borneUField = Block.data.indexes[self.id].borneUnfav;
-		indexForm.valueField = Block.data.indexes[self.id].value;
+		indexForm.weightField = Box.data.indexes[self.dataId].weight;
+		indexForm.borneFField = Box.data.indexes[self.dataId].borneFav;
+		indexForm.borneUField = Box.data.indexes[self.dataId].borneUnfav;
+		indexForm.valueField = Box.data.indexes[self.dataId].value;
 		indexForm.open();
 	});
 }
 Box.prototype.makeModule = function(){
 	var self = this;
 	this.component.withIndexAdd = this.component.withModuleAdd = this.component.withReduce = true;
+	if(Box.reduced.indexOf(this.id) != -1)
+		this.component.isReduced = true;
 	this.component.closed.connect(function(){
 		app.removeModule(self.id);
+	});
+	this.component.reduced.connect(function(){
+		Box.reduced.push(self.id);
+		render();
+	});
+	this.component.expand.connect(function(){
+		var ii = Box.reduced.indexOf(self.id);
+		if(ii != -1)
+			Box.reduced.splice(ii, 1);
+		render();
 	});
 	this.component.indexAddClicked.connect(function(){
 		indexForm.parentId = self.id;
@@ -233,20 +293,67 @@ Box.prototype.makeModule = function(){
 		moduleForm.parentId = -1;
 		moduleForm.num = self.id;
 		moduleForm.nameField = self.name;
-		moduleForm.weightField = Block.data.modules[self.id].weight;
+		moduleForm.weightField = Box.data.modules[self.dataId].weight;
 		moduleForm.open();
 	});
 }
+Box.prototype.getWH = function() {
+	if(this.totalHeight === 0 && this.totalWidth === 0){
+		this.totalWidth = 10;
+		this.totalHeight = 10;
+		if(this.type === 'index' || Box.reduced.indexOf(this.id) != -1){
+			this.totalWidth += this.component.width;
+			this.totalHeight += this.component.height;
+		} else {
+			var t = {w: 0, h: 0};
+			for(var k in this.childs){
+				var i = Box.blocks[this.childs[k]].getWH();
+				t.w += i.w;
+				t.h += i.h;
+			}
+			this.totalWidth += Math.max(this.component.width, t.w);
+			this.totalHeight += Math.max(this.component.height, t.h);
+		}
+	}
+	return {
+		w: this.totalWidth,
+		h: this.totalHeight
+	};
+}
 Box.prototype.drawAt = function(x, y) {
-	console.log('Drawing box ' + this.id + ' at (' + x + ', ' + y + ')');
-	this.component.x = x;
+	// console.log('Drawing box ' + this.id + ' at (' + x + ', ' + y + ')');
+	this.component.x = x + (this.totalWidth - this.component.width) / 2;
 	this.component.y = y;
 	this.component.visible = true;
-	y = y + this.component.height + 10;
+	if(Box.reduced.indexOf(this.id) != -1)
+		return;
+	y = y + this.component.height + 16;
+	var flag = false;
 	for(var i in this.childs){
-		Box.blocks[this.childs[i]].drawAt(x, y);
-		x = x + Box.blocks[this.childs[i]].component.width + 10;
+		var child = Box.blocks[this.childs[i]];
+		child.drawAt(x, y);
+		Box.drawLink(
+			this.component.x + this.component.width / 2,
+			this.component.y + this.component.height + 8,
+			x + child.totalWidth / 2,
+			this.component.y + this.component.height + 8
+		);
+		Box.drawLink(
+			x + child.totalWidth / 2,
+			this.component.y + this.component.height + 8,
+			x + child.totalWidth / 2,
+			this.component.y + this.component.height + 16
+		);
+		x = x + child.totalWidth;
+		flag = true;
 	}
+	if(flag)
+		Box.drawLink(
+			this.component.x + this.component.width / 2,
+			this.component.y + this.component.height,
+			this.component.x + this.component.width / 2,
+			this.component.y + this.component.height + 8
+		);
 };
 // Rendering function
 function render(){
@@ -255,4 +362,5 @@ function render(){
 	Box.clear();
 	Box.init();
 	Box.draw();
+	console.log(Box.blocks[0].getWH());
 }

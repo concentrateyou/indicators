@@ -7,6 +7,7 @@ void Application::init(){
 	qDebug() << "init called !";
 	indexes.clear();
 	moduls.clear();
+	indicator.removeAllChilds();
 }
 void Application::create(QString name){
 	indicator.setId(0);

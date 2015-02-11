@@ -12,7 +12,7 @@ Rectangle {
 	property alias withModuleAdd: moduleAddBtn.visible
 
 	property bool withReduce: true
-	property bool isReduced: true
+	property bool isReduced: false
 	property int num
 	property string type
 
@@ -47,21 +47,21 @@ Rectangle {
 			text: '+M'
 			normalColor: '#15AF17'
 			hoverColor: '#60E959'
-			area.onClicked : moduleAddClicked()
+			area.onClicked: moduleAddClicked()
 		}
 		MiniButton {
 			id: indexAddBtn
 			text: '+I'
 			normalColor: '#15AF17'
 			hoverColor: '#60E959'
-			area.onClicked : indexAddClicked()
+			area.onClicked: indexAddClicked()
 		}
 		MiniButton {
 			id: reduceBtn
 			text: '-'
 			normalColor: '#39A0D1'
 			hoverColor: '#69C0D1'
-			area.onClicked : { 
+			area.onClicked: { 
 				reduced();
 				isReduced = true;
 			}
@@ -72,7 +72,7 @@ Rectangle {
 			text: '+'
 			normalColor: '#39A0D1'
 			hoverColor: '#69C0D1'
-			area.onClicked : {
+			area.onClicked: {
 				expand();
 				isReduced = false;
 			}
@@ -83,7 +83,7 @@ Rectangle {
 			text: 'X'
 			normalColor: '#E63434'
 			hoverColor: '#FF8D8D'
-			area.onClicked : closed()
+			area.onClicked: closed()
 		}
 		Item { 
 			width: 2
@@ -102,6 +102,9 @@ Rectangle {
 			anchors.centerIn: parent
 			text: 'Unknown'
 		}
+		// U: 
+		// F:
+		// 
 		Item { 
 			width: 2
 		}
@@ -111,11 +114,11 @@ Rectangle {
 			anchors.fill: parent
 			hoverEnabled: true
 			onEntered: { 
-				block.color = '#eeeeee';
+				block.color = '#fff';
 				block.border.color = '#39A0D1';
 			}
 			onExited: {
-				block.color = '#dddddd';
+				block.color = '#eee';
 				block.border.color = '#000000';
 			}
 			onDoubleClicked: block.doubleClicked()

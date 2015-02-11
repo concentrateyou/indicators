@@ -1,0 +1,10 @@
+Remove module's childs when removing a module
+Afficher les U, F, W, et V surles blcoks
+Calcul automatique des valeurs à chaque modification
+Import/Export des modules en XML
+Import/Export des indicateurs en XML
+Export des indicateurs en PDF, JPG*, CSV
+Faire les tests unitaires de toutes les fonctionnalités
+Vérification des données entrées en formulaires
+Affichage de l'état de chaque indice/module (par couleur ou valeur)
+Doxygen & Graphviz
