@@ -25,7 +25,7 @@ void Application::load(QString fileName){
 	binaryFile.close();
 	emit changed(); 
 }
-void Application::save(QString fileName){
+void Application::save(QString fileName, Format format){
 	qDebug() << "Saving on : " << fileName;
 	QFile binaryFile(fileName);
 	QDataStream data(&binaryFile);
@@ -35,14 +35,202 @@ void Application::save(QString fileName){
 	data << moduls;
 	binaryFile.close();
 }
+
+void Application::export(QString fileName, Format format){
+	switch(format){
+		case XML: 
+			exportXML(fileName); 
+			break;
+		case PDF:
+			exportPDF(fileName); 
+			break;
+		case JPG:
+			exportJPG(fileName); 
+			break;;
+		case CSV: 
+			exportCSV(fileName); 
+			break;
+		case EXCEL: 
+			exportEXCEL(fileName); 
+			break;
+	}
+
+}
+void Application::import(QString fileName, Format format){
+	switch(format){
+		case XML: 
+			importXML(fileName); 
+			break;
+		case PDF:
+			importPDF(fileName); 
+			break;
+		case JPG:
+			importJPG(fileName); 
+			break;;
+		case CSV: 
+
+			importCSV(fileName); 
+			break;
+		case EXCEL: 
+			importEXCEL(fileName); 
+			break;
+	}
+}
+void Application::exportXML(QString fileName){
+	int id;
+	QFile xmlFile(fileName);
+	QXmlStreamWriter xmlWriter(&xmlFile);
+	xmlFile.open(QFile::WriteOnly);
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+	    xmlWriter.writeStartElement("indicator");
+	    xmlWriter.writeAttribute("id", indicator.getId());
+	    xmlWriter.writeAttribute("name", indicator.getName());
+	    xmlWriter.writeAttribute("value", indicator.getValue());
+		writeDocumentXML(indicator.getChilds());	    
+	    xmlWriter.writeEndElement();
+    xmlWriter.writeEndDocument();
+    xmlFile.close();
+}
+void Application::writeDocumentXML(QVector<int>& childs){
+
+for (int i = 0; i < childs.size(); ++i)
+   	{	
+		if(indexes.contains(childs[i])){
+			id = childs[i];
+			Index& index = indexes[id];
+			xmlWriter.writeStartElement("index");
+				xmlWriter.writeAttribute("id", id);
+				xmlWriter.writeAttribute("parentId", index.getParentId());
+				xmlWriter.writeAttribute("name", index.getName());
+				xmlWriter.writeAttribute("weigth", index.getWeight());
+				xmlWriter.writeAttribute("value", index.getValue());
+				xmlWriter.writeAttribute("borneFav", index.getBorneFav());
+				xmlWriter.writeAttribute("borneUnfav", index.getBorneUnfav());
+				xmlWriter.writeCharacters(index.getName());
+			xmlWriter.writeEndElement();
+		} else if(moduls.contains(childs[i])){
+			id = childs[i];
+			Module& module = moduls[id];
+			xmlWriter.writeStartElement("module");
+				xmlWriter.writeAttribute("id", id);
+				xmlWriter.writeAttribute("parentId", module.getParentId());
+				xmlWriter.writeAttribute("name", module.getName());
+				xmlWriter.writeAttribute("weigth", module.getWeight());
+				xmlWriter.writeAttribute("value", module.getValue());
+				writeDocumentXML(module.getChilds());
+			xmlWriter.writeEndElement();
+		}
+   	}
+}
+void Application::importXML(QString fileName){
+	QString id, name, value, parentId, weigth, borneFav, borneUnfav;
+
+    QFile xmlFile(fileName);
+    QXmlStreamReader xmlReader(&xmlFile);
+    xmlFile.open(QFile::ReadOnly);
+    xmlReader.readNext();
+    while(!xmlReader.atEnd() && !xmlReader.hasError()) {
+     //   QXmlStreamReader::TokenType token = xmlReader.readNext();
+        if(xmlReader.isStartElement() && xmlReader.name() == "indicator"){
+        	id = xmlReader.attributes().value("id").toString();
+        	indicator.setId(id.toInt());
+        	name = xmlReader.attributes().value("name").toString();
+        	indicator.setName(name);
+        	value = xmlReader.attributes().value("value").toString();
+        	indicator.setValue(value.toDouble());
+
+        	readDocumentXML(xmlReader.readNext());
+
 /*
-void Application::export(QString fileName){
-	//TO DO
-}
-void Application::import(QString fileName){
-	//TO DO
-}
+            if(xmlReader.name("index")){
+            	id = xmlReader.attributes().value("id").toString();
+	        	indicator.addChild(id);
+
+	        	parentId = xmlReader.attributes().value("parentId").toString();
+	        	name = xmlReader.attributes().value("name").toString();	
+	     		weigth = xmlReader.attributes().value("weigth").toString();
+	        	value = xmlReader.attributes().value("value").toString();
+	        	borneFav = xmlReader.attributes().value("borneFav").toString();
+	        	borneUnfav = xmlReader.attributes().value("borneUnfav").toString();
+				Index index(name, parentId.toInt(), weigth.toDouble(), value.toDouble(), borneFav.toDouble(), borneUnfav.toDouble());
+				indexes.insert(id, index);
+            }else if(xmlReader.name("module")){
+            	id = xmlReader.attributes().value("id").toString();
+	        	indicator.addChild(id);
+
+	        	parentId = xmlReader.attributes().value("parentId").toString();
+	        	name = xmlReader.attributes().value("name").toString();	
+	     		weigth = xmlReader.attributes().value("weigth").toString();
+	        	value = xmlReader.attributes().value("value").toString();
+
+
+            }
+
 */
+        }
+    }
+    if(xmlReader.hasError())
+    	qDebug() << "Error while reading the xml !";
+    else
+    	qDebug() << "XML name: " << name;
+    xmlReader.clear();
+    xmlFile.close();
+}
+
+void Application::readDocumentXML(QXmlStreamReader::TokenType xmlReader){
+
+if(xmlReader.name("index")){
+    	id = xmlReader.attributes().value("id").toString();
+    	indicator.addChild(id);
+
+    	parentId = xmlReader.attributes().value("parentId").toString();
+    	name = xmlReader.attributes().value("name").toString();	
+ 		weigth = xmlReader.attributes().value("weigth").toString();
+    	value = xmlReader.attributes().value("value").toString();
+    	borneFav = xmlReader.attributes().value("borneFav").toString();
+    	borneUnfav = xmlReader.attributes().value("borneUnfav").toString();
+		Index index(name, parentId.toInt(), weigth.toDouble(), value.toDouble(), borneFav.toDouble(), borneUnfav.toDouble());
+		indexes.insert(id, index);
+    }else if(xmlReader.name("module")){
+    	id = xmlReader.attributes().value("id").toString();
+    	indicator.addChild(id);
+
+    	parentId = xmlReader.attributes().value("parentId").toString();
+    	name = xmlReader.attributes().value("name").toString();	
+ 		weigth = xmlReader.attributes().value("weigth").toString();
+    	value = xmlReader.attributes().value("value").toString();
+		xmlReader.readNext();
+    	readDocumentXML(xmlReader);
+		Module module(name, parentId.toInt(), weight.toDouble(), value.toDouble());
+		moduls.insert(id, module);
+    }
+
+}
+void Application::exportPDF(QString fileName){
+
+}
+void Application::importPDF(QString fileName){
+
+}
+void Application::exportCSV(QString fileName){
+
+}
+void Application::importCSV(QString fileName){
+
+}
+void Application::exportEXCEL(QString fileName){
+
+}
+void Application::importEXCEL(QString fileName){
+
+}
+void Application::exportJPG(QString fileName){
+
+}
+void Application::importJPG(QString fileName){
+
+}
 
 void Application::addIndex(QString name, int parentId, double weight, double value, double borneFav, double borneUnfav){
 	Index index(name, parentId, weight, value, borneFav, borneUnfav);

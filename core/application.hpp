@@ -36,9 +36,25 @@ namespace core {
 		void create(QString);
 		void load(QString);
 		void save(QString);
-		//void export(QString);
-		//void import(QString);
+		void export(QString, Format);
+		void import(QString, Format);
+		
+		void exportXML(QString);
+		void writeDocumentXML(QVector<int>& childs);		
+		void importXML(QString);
+		
+		void exportPDF(QString);
+		void importPDF(QString);
+		
+		void exportCSV(QString);
+		void importCSV(QString);
+		
+		void exportEXCEL(QString);
+		void importEXCEL(QString);
 
+		void exportJPG(QString);
+		void importJPG(QString);
+		
 		void addIndex(QString, int, double, double, double, double);
 		bool removeIndex(int);
 		void editIndex(int, QString, double, double, double, double);
