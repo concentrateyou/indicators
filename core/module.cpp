@@ -38,6 +38,11 @@ const QVector<int>& Module::getChilds() const{
 void Module::setChilds(QVector<int>& childs){
 	this->childs = childs;
 }
+
+QList<int> Module::getChildsForQML(){
+	return childs.toList();
+}
+
 QDataStream& core::operator>>(QDataStream& in, Module& module){
 	int id, parentId;
 	QString name;

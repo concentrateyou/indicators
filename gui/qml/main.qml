@@ -13,46 +13,94 @@ ApplicationWindow {
     width: 600
     height: 600
     visible: true
-
-    menuBar: MenuBar {
-        Menu {
-            title: "&File"
-            MenuItem {
-                text: "&New Indicator"
-                onTriggered: indicatorForm.open()
-            }
-            MenuItem {
-                text: "&Save Indicator"
-                onTriggered: {
-                	Handler.setAction('save');
-                	fileDialog.open();
-                }
-            }
-            MenuItem {
-                text: "L&oad Indicator"
-                onTriggered: {
-                	Handler.setAction('load');
-                	fileDialog.open();
-                }
-            }
-            MenuItem {
-                text: qsTr("E&xit")
-                onTriggered: Qt.quit();
-            }
-        }
-    }
-
     App {
         id: app
         onChanged: Handler.render()
     }
 
-    Rectangle {
-        id: content
-        color: "#cccccc"
-        anchors.fill: parent
-    }
+    // menuBar: MenuBar {
+    //     Menu {
+    //         title: "&File"
+    //         MenuItem {
+    //             text: "&New Indicator"
+    //             onTriggered: indicatorForm.open()
+    //         }
+    //         MenuItem {
+    //             text: "&Save Indicator"
+    //             onTriggered: {
+    //             	Handler.setAction('save');
+    //             	fileDialog.open();
+    //             }
+    //         }
+    //         MenuItem {
+    //             text: "L&oad Indicator"
+    //             onTriggered: {
+    //             	Handler.setAction('load');
+    //             	fileDialog.open();
+    //             }
+    //         }
+    //         MenuItem {
+    //             text: qsTr("E&xit")
+    //             onTriggered: Qt.quit();
+    //         }
+    //     }
+    // }
 
+    ColumnLayout {
+        anchors.fill: parent
+        Rectangle {
+            id: miniMenu
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 30
+            color: '#999'
+            RowLayout {
+                spacing: 0
+                MiniButton {
+                    width: 65
+                    border.width: 0
+                    normalColor: '#999'
+                    hoverColor: '#bbb'
+                    text: 'New'
+                    area.onClicked: {
+                        indicatorForm.nameField = '';
+                        indicatorForm.open()
+                    }
+                }
+                MiniButton {
+                    width: 65
+                    border.width: 0
+                    normalColor: '#999'
+                    hoverColor: '#bbb'
+                    text: 'Open'
+                    area.onClicked: {
+                        Handler.setAction('load');
+                        fileDialog.open();
+                    }
+                }
+                MiniButton {
+                    width: 65
+                    border.width: 0
+                    normalColor: '#999'
+                    hoverColor: '#bbb'
+                    text: 'Save'
+                    area.onClicked: {
+                        Handler.setAction('save');
+                        fileDialog.open();
+                    }
+                }
+            }
+        }
+        Rectangle {
+            id: content
+            anchors.top: miniMenu.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#cccccc"
+        }   
+    }
     MessageDialog {
         id: messageDialog
         title: qsTr("May I have your attention, please?")
@@ -79,7 +127,13 @@ ApplicationWindow {
         	Handler.submitIndex(parentId, num, nameField, weightField, borneFField, borneUField, valueField);
     	}
     }
-
+    
+    ModuleForm {
+    	id: moduleForm
+        onAccepted: {
+        	Handler.submitModule(parentId, num, nameField, weightField);
+    	}
+    }
     FileDialog {
     	id: fileDialog
     	title: "Please choose where to save"

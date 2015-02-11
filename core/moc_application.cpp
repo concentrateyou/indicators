@@ -64,28 +64,29 @@ static const uint qt_meta_data_core__Application[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
-       3,  134, // properties
+      13,   14, // methods
+       3,  146, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
+       1,    0,   79,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   75,    2, 0x0a /* Public */,
-       4,    1,   76,    2, 0x0a /* Public */,
-       5,    1,   79,    2, 0x0a /* Public */,
-       6,    1,   82,    2, 0x0a /* Public */,
-       7,    6,   85,    2, 0x0a /* Public */,
-       8,    1,   98,    2, 0x0a /* Public */,
-       9,    6,  101,    2, 0x0a /* Public */,
-      10,    4,  114,    2, 0x0a /* Public */,
-      11,    1,  123,    2, 0x0a /* Public */,
-      12,    3,  126,    2, 0x0a /* Public */,
-      13,    0,  133,    2, 0x0a /* Public */,
+       3,    0,   80,    2, 0x0a /* Public */,
+       4,    1,   81,    2, 0x0a /* Public */,
+       5,    1,   84,    2, 0x0a /* Public */,
+       6,    1,   87,    2, 0x0a /* Public */,
+       7,    6,   90,    2, 0x0a /* Public */,
+       8,    1,  103,    2, 0x0a /* Public */,
+       9,    6,  106,    2, 0x0a /* Public */,
+      10,    4,  119,    2, 0x0a /* Public */,
+      10,    3,  128,    2, 0x2a /* Public | MethodCloned */,
+      11,    1,  135,    2, 0x0a /* Public */,
+      12,    3,  138,    2, 0x0a /* Public */,
+      13,    0,  145,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -99,6 +100,7 @@ static const uint qt_meta_data_core__Application[] = {
     QMetaType::Bool, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,    2,    2,    2,    2,    2,    2,
     QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::Double, QMetaType::Double,    2,    2,    2,    2,
+    QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::Double,    2,    2,    2,
     QMetaType::Bool, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Double,    2,    2,    2,
     QMetaType::Void,
@@ -131,10 +133,11 @@ void core::Application::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 7: _t->editIndex((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5])),(*reinterpret_cast< double(*)>(_a[6]))); break;
         case 8: _t->addModule((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4]))); break;
-        case 9: { bool _r = _t->removeModule((*reinterpret_cast< int(*)>(_a[1])));
+        case 9: _t->addModule((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
+        case 10: { bool _r = _t->removeModule((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 10: _t->editModule((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
-        case 11: _t->show(); break;
+        case 11: _t->editModule((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
+        case 12: _t->show(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -182,13 +185,13 @@ int core::Application::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 13;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {

@@ -5,6 +5,8 @@
 		<file>MiniButton.qml</file>
 		<file>IndicatorForm.qml</file>
 		<file>IndexForm.qml</file>
+		<file>ModuleForm.qml</file>
+		<file>Link.qml</file>
 		<file>js/handler.js</file>
 	</qresource>
 </RCC>

@@ -13,6 +13,6 @@ int main(int argc, char** argv){
     qmlRegisterType<Application>("Indicators.Models", 1, 0, "App");
     
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
+    
     return app.exec();
 }

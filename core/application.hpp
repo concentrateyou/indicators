@@ -59,9 +59,15 @@ namespace core {
 		bool removeIndex(int);
 		void editIndex(int, QString, double, double, double, double);
 
-		void addModule(QString, int, double, double);
+		void addModule(QString, int, double, double = 0);
 		bool removeModule(int);
 		void editModule(int, QString, double);
+		void show(){
+			qDebug() << "Indexes:";
+			foreach(int i, indexes.keys()){
+				qDebug() << i << ": { id:" << indexes[i].getId() << ", parent:" << indexes[i].getParentId() << ", name:" << indexes[i].getName() << " }";
+			}
+		}
 	signals:
 		void changed();
 	};	

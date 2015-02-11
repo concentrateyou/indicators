@@ -97,3 +97,6 @@ QDataStream& core::operator<<(QDataStream& out, Indicator& i){
 QList<int> Indicator::getChildsForQML(){
 	return childs.toList();
 }
+void Indicator::removeAllChilds(){
+	childs.clear();
+}

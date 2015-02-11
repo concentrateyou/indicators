@@ -35,6 +35,7 @@ namespace core {
 		int getChild(int) const;
 		int getId() const;
 		bool removeChild(int);
+		void removeAllChilds();
 	signals:
 		void nameChanged();
 		void valueChanged();
