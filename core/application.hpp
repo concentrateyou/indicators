@@ -54,20 +54,21 @@ namespace core {
 		void editModule(int, QString, double);
 		bool removeModule(int);
 		void exportModuleAsXML(int, QString);
+		bool importModuleFromXML(int, QString);
 
 		Value& valueAt(int);
 		bool removeValue(int);
 		void updateValue();
-		// void show(){
-		// 	qDebug() << "Indexes:";
-		// 	foreach(int i, indexes.keys()){
-		// 		qDebug() << i << ": { id:" << indexes[i].getId() << ", parent:" << indexes[i].getParentId() << ", name:" << indexes[i].getName() << " }";
-		// 	}
-		// 	qDebug() << "Modules:";
-		// 	foreach(int i, modules.keys()){
-		// 		qDebug() << i << ": { id:" << modules[i].getId() << ", parent:" << modules[i].getParentId() << ", name:" << modules[i].getName() << " }";
-		// 	}
-		// }
+		void show(){
+			qDebug() << "Indexes:";
+			foreach(int i, indexes.keys()){
+				qDebug() << i << ": { id:" << indexes[i].getId() << ", parent:" << indexes[i].getParentId() << ", name:" << indexes[i].getName() << " }";
+			}
+			qDebug() << "Modules:";
+			foreach(int i, modules.keys()){
+				qDebug() << i << ": { id:" << modules[i].getId() << ", parent:" << modules[i].getParentId() << ", name:" << modules[i].getName() << " }";
+			}
+		}
 	signals:
 		void changed();
 	};	

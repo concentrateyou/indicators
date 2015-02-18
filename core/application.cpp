@@ -69,20 +69,6 @@ void Application::exportAsXML(QString fileName){
     xmlWriter.writeEndDocument();
     xmlFile.close();
 }
-
-void Application::exportModuleAsXML(int id, QString fileName){
-	if(modules.contains(id)){
-		QFile xmlFile(fileName);
-		QXmlStreamWriter xmlWriter(&xmlFile);
-		xmlFile.open(QFile::WriteOnly);
-	    xmlWriter.setAutoFormatting(true);
-	    xmlWriter.writeStartDocument();
-	    modules[id].toXML(xmlWriter);
-	    xmlWriter.writeEndDocument();
-	    xmlFile.close();
-	}
-}
-
 bool Application::importXML(QString fileName){
 	bool result;
     QFile xmlFile(fileName);
@@ -103,8 +89,39 @@ bool Application::importXML(QString fileName){
     xmlFile.close();
     return result;
 }
-
-
+void Application::exportModuleAsXML(int id, QString fileName){
+	if(modules.contains(id)){
+		QFile xmlFile(fileName);
+		QXmlStreamWriter xmlWriter(&xmlFile);
+		xmlFile.open(QFile::WriteOnly);
+	    xmlWriter.setAutoFormatting(true);
+	    xmlWriter.writeStartDocument();
+	    modules[id].toXML(xmlWriter);
+	    xmlWriter.writeEndDocument();
+	    xmlFile.close();
+	}
+}
+bool Application::importModuleFromXML(int parentId, QString fileName){
+	bool result;
+    QFile xmlFile(fileName);
+    QXmlStreamReader xmlReader(&xmlFile);
+    xmlFile.open(QFile::ReadOnly);
+    while(!xmlReader.atEnd() && !xmlReader.hasError()){
+    	xmlReader.readNext();
+        if(xmlReader.isStartElement() && xmlReader.name().compare("module") == 0){
+        	int id = addModule("", parentId, 0);
+        	result = modules[id].fromXML(xmlReader);
+        	if(!result)
+        		removeModule(id);
+        	break;
+        }
+    }
+    if(xmlReader.hasError())
+    	result = false;
+    xmlReader.clear();
+    xmlFile.close();
+    return result;
+}
 
 void Application::exportAsPDF(QString fileName){
 

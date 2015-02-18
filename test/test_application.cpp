@@ -147,8 +147,16 @@ void TestApplication::exportImportModule(){
 	app.addIndex("C", mId2, 1, 1.3, 0.3, 2.6);
 	int mId3 = app.addModule("M3", mId1, 0.25);
 	app.addIndex("D", mId3, 1, 1, 0.3, 1.7);
-
+	app.show();
 	app.exportModuleAsXML(mId1, "files/module.xml");
+
+	app.init();
+	app.create("Indicator");
+	app.importModuleFromXML(0, "files/module.xml");
+	app.exportModuleAsXML(app.getModules().first().getId(), "files/module2.xml");
+	app.show();
+	QVERIFY(3 == app.getModules().size());
+	QVERIFY(4 == app.getIndexes().size());
 }
 QTEST_MAIN(TestApplication)
 #include "test_application.moc"

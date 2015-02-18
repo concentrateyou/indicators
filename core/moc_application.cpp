@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_core__Application_t {
-    QByteArrayData data[29];
-    char stringdata[294];
+    QByteArrayData data[31];
+    char stringdata[319];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -52,13 +52,15 @@ QT_MOC_LITERAL(18, 168, 9), // "addModule"
 QT_MOC_LITERAL(19, 178, 10), // "editModule"
 QT_MOC_LITERAL(20, 189, 12), // "removeModule"
 QT_MOC_LITERAL(21, 202, 17), // "exportModuleAsXML"
-QT_MOC_LITERAL(22, 220, 7), // "valueAt"
-QT_MOC_LITERAL(23, 228, 11), // "removeValue"
-QT_MOC_LITERAL(24, 240, 11), // "updateValue"
-QT_MOC_LITERAL(25, 252, 9), // "indicator"
-QT_MOC_LITERAL(26, 262, 7), // "indexes"
-QT_MOC_LITERAL(27, 270, 15), // "QList<QObject*>"
-QT_MOC_LITERAL(28, 286, 7) // "modules"
+QT_MOC_LITERAL(22, 220, 19), // "importModuleFromXML"
+QT_MOC_LITERAL(23, 240, 7), // "valueAt"
+QT_MOC_LITERAL(24, 248, 11), // "removeValue"
+QT_MOC_LITERAL(25, 260, 11), // "updateValue"
+QT_MOC_LITERAL(26, 272, 4), // "show"
+QT_MOC_LITERAL(27, 277, 9), // "indicator"
+QT_MOC_LITERAL(28, 287, 7), // "indexes"
+QT_MOC_LITERAL(29, 295, 15), // "QList<QObject*>"
+QT_MOC_LITERAL(30, 311, 7) // "modules"
 
     },
     "core::Application\0changed\0\0init\0create\0"
@@ -67,9 +69,9 @@ QT_MOC_LITERAL(28, 286, 7) // "modules"
     "exportAsEXCEL\0exportAsJPG\0addIndex\0"
     "editIndex\0removeIndex\0addModule\0"
     "editModule\0removeModule\0exportModuleAsXML\0"
-    "valueAt\0removeValue\0updateValue\0"
-    "indicator\0indexes\0QList<QObject*>\0"
-    "modules"
+    "importModuleFromXML\0valueAt\0removeValue\0"
+    "updateValue\0show\0indicator\0indexes\0"
+    "QList<QObject*>\0modules"
 };
 #undef QT_MOC_LITERAL
 
@@ -79,38 +81,40 @@ static const uint qt_meta_data_core__Application[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
-       3,  216, // properties
+      24,   14, // methods
+       3,  232, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  124,    2, 0x06 /* Public */,
+       1,    0,  134,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  125,    2, 0x0a /* Public */,
-       4,    1,  126,    2, 0x0a /* Public */,
-       5,    1,  129,    2, 0x0a /* Public */,
-       6,    1,  132,    2, 0x0a /* Public */,
-       7,    1,  135,    2, 0x0a /* Public */,
-       8,    2,  138,    2, 0x0a /* Public */,
-      10,    1,  143,    2, 0x0a /* Public */,
-      11,    1,  146,    2, 0x0a /* Public */,
-      12,    1,  149,    2, 0x0a /* Public */,
-      13,    1,  152,    2, 0x0a /* Public */,
-      14,    1,  155,    2, 0x0a /* Public */,
-      15,    6,  158,    2, 0x0a /* Public */,
-      16,    6,  171,    2, 0x0a /* Public */,
-      17,    1,  184,    2, 0x0a /* Public */,
-      18,    3,  187,    2, 0x0a /* Public */,
-      19,    3,  194,    2, 0x0a /* Public */,
-      20,    1,  201,    2, 0x0a /* Public */,
-      21,    2,  204,    2, 0x0a /* Public */,
-      22,    1,  209,    2, 0x0a /* Public */,
-      23,    1,  212,    2, 0x0a /* Public */,
-      24,    0,  215,    2, 0x0a /* Public */,
+       3,    0,  135,    2, 0x0a /* Public */,
+       4,    1,  136,    2, 0x0a /* Public */,
+       5,    1,  139,    2, 0x0a /* Public */,
+       6,    1,  142,    2, 0x0a /* Public */,
+       7,    1,  145,    2, 0x0a /* Public */,
+       8,    2,  148,    2, 0x0a /* Public */,
+      10,    1,  153,    2, 0x0a /* Public */,
+      11,    1,  156,    2, 0x0a /* Public */,
+      12,    1,  159,    2, 0x0a /* Public */,
+      13,    1,  162,    2, 0x0a /* Public */,
+      14,    1,  165,    2, 0x0a /* Public */,
+      15,    6,  168,    2, 0x0a /* Public */,
+      16,    6,  181,    2, 0x0a /* Public */,
+      17,    1,  194,    2, 0x0a /* Public */,
+      18,    3,  197,    2, 0x0a /* Public */,
+      19,    3,  204,    2, 0x0a /* Public */,
+      20,    1,  211,    2, 0x0a /* Public */,
+      21,    2,  214,    2, 0x0a /* Public */,
+      22,    2,  219,    2, 0x0a /* Public */,
+      23,    1,  224,    2, 0x0a /* Public */,
+      24,    1,  227,    2, 0x0a /* Public */,
+      25,    0,  230,    2, 0x0a /* Public */,
+      26,    0,  231,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -134,14 +138,16 @@ static const uint qt_meta_data_core__Application[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Double,    2,    2,    2,
     QMetaType::Bool, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::QString,    2,    2,
+    QMetaType::Bool, QMetaType::Int, QMetaType::QString,    2,    2,
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Bool, QMetaType::Int,    2,
     QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
-      25, QMetaType::QObjectStar, 0x00495001,
-      26, 0x80000000 | 27, 0x00495009,
-      28, 0x80000000 | 27, 0x00495009,
+      27, QMetaType::QObjectStar, 0x00495001,
+      28, 0x80000000 | 29, 0x00495009,
+      30, 0x80000000 | 29, 0x00495009,
 
  // properties: notify_signal_id
        0,
@@ -180,10 +186,13 @@ void core::Application::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 17: { bool _r = _t->removeModule((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 18: _t->exportModuleAsXML((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 19: _t->valueAt((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: { bool _r = _t->removeValue((*reinterpret_cast< int(*)>(_a[1])));
+        case 19: { bool _r = _t->importModuleFromXML((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 21: _t->updateValue(); break;
+        case 20: _t->valueAt((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 21: { bool _r = _t->removeValue((*reinterpret_cast< int(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 22: _t->updateValue(); break;
+        case 23: _t->show(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -231,13 +240,13 @@ int core::Application::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 24)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 24;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {

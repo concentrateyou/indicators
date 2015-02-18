@@ -120,10 +120,12 @@ bool Module::fromXML(QXmlStreamReader& r){
     				qDebug() << "it's a module";
     				int i = Value::getApp()->addModule("", id, 0);
     				result = result && Value::at(i).fromXML(r);
+    				// childs.append(i);
     			} else if(r.name().compare("index") == 0){
     				qDebug() << "It's an index";
     				int i = Value::getApp()->addIndex("", id, 0, 0, 0, 0);
     				result = result && Value::at(i).fromXML(r);
+    				// childs.append(i);
     			}
     		}
     		r.readNext();

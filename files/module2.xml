@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="M1" weight="0.5" value="0">
+    <index name="A" weight="0.5" value="1.5" borne-favorable="0.5" borne-unfavorable="2"/>
+    <module name="M2" weight="0.25" value="0">
+        <index name="B" weight="0.5" value="1.8" borne-favorable="2.3" borne-unfavorable="1.2"/>
+        <index name="C" weight="1" value="1.3" borne-favorable="0.3" borne-unfavorable="2.6"/>
+        <module name="M3" weight="0.25" value="0">
+            <index name="D" weight="1" value="1" borne-favorable="0.3" borne-unfavorable="1.7"/>
+        </module>
+    </module>
+</module>
