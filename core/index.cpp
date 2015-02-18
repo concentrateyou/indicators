@@ -1,4 +1,5 @@
 #include "index.hpp"
+#include <QDebug>
 using namespace core;
 Index::Index(){}
 Index::Index(QString name, int parentId, double weight, double value, double borneFav, double borneUnfav):Value(name, parentId, weight, value){
@@ -28,6 +29,35 @@ void Index::setBorneFav(double borneFav){
 void Index::setBorneUnfav(double borneUnfav){
 	this->borneUnfav = borneUnfav;
 	emit borneUnfavChanged();
+}
+void Index::updateValues(){
+	// Computing the F and U values 
+	computeFAndUValues(borneFav, borneUnfav);
+}
+void Index::toXML(QXmlStreamWriter& w){
+	w.writeStartElement("index");
+	w.writeAttribute("name", name);
+	w.writeAttribute("weight", QString::number(weight));
+	w.writeAttribute("value", QString::number(value));
+	w.writeAttribute("borne-favorable", QString::number(borneFav));
+	w.writeAttribute("borne-unfavorable", QString::number(borneUnfav));
+	w.writeEndElement();
+}
+bool Index::fromXML(QXmlStreamReader& r){
+	bool result = true;
+	qDebug() << "Start parsing an index";
+	if(!r.atEnd() && !r.hasError() && r.isStartElement() && r.name().compare("index") == 0){
+		qDebug() << "Well it's an index, filling attributes ...";
+    	name = r.attributes().value("name").toString();
+    	weight = r.attributes().value("weight").toDouble();
+    	value = r.attributes().value("value").toDouble();
+    	borneFav = r.attributes().value("borne-favorable").toDouble();
+    	borneUnfav = r.attributes().value("borne-unfavorable").toDouble();
+    	r.readNext();
+	} else 
+		result = false;
+	qDebug() << "End parsing an index";
+	return result;
 }
 QDataStream& core::operator>>(QDataStream& in, Index& index){
 	int id, parentId;

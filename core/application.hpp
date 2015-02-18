@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QList>
 #include <QDebug>
+#include <QXmlStreamWriter>
 namespace core {
 	enum Format {
 		XML,
@@ -19,55 +20,54 @@ namespace core {
 		Q_OBJECT
    		Q_PROPERTY(QObject* indicator READ getIndicatorForQML NOTIFY changed)
    		Q_PROPERTY(QList<QObject*> indexes READ getIndexesForQML NOTIFY changed)
-   		Q_PROPERTY(QList<QObject*> modules READ getModulsForQML NOTIFY changed)
+   		Q_PROPERTY(QList<QObject*> modules READ getModulesForQML NOTIFY changed)
 	private:
 		Indicator indicator;
-		QMap<int, Module> moduls;
+		QMap<int, Module> modules;
 		QMap<int, Index> indexes;
 	public:
-		const QMap<int, Module>& getModuls() const;
+		const QMap<int, Module>& getModules() const;
 		const QMap<int, Index>& getIndexes() const;
 		const Indicator& getIndicator() const;
 		QList<QObject*> getIndexesForQML() ;
-	 	QList<QObject*> getModulsForQML();
-	 	QObject* getIndicatorForQML();	
+	 	QList<QObject*> getModulesForQML();
+	 	QObject* getIndicatorForQML();
 	public slots:
 		void init();
 		void create(QString);
 		void load(QString);
 		void save(QString);
-		void export(QString, Format);
-		void import(QString, Format);
 		
-		void exportXML(QString);
-		void writeDocumentXML(QVector<int>& childs);		
-		void importXML(QString);
+		bool importXML(QString);
+		void exportAs(QString, Format);
+		void exportAsXML(QString);
+		void exportAsPDF(QString);
+		void exportAsCSV(QString);
+		void exportAsEXCEL(QString);
+		void exportAsJPG(QString);
 		
-		void exportPDF(QString);
-		void importPDF(QString);
-		
-		void exportCSV(QString);
-		void importCSV(QString);
-		
-		void exportEXCEL(QString);
-		void importEXCEL(QString);
-
-		void exportJPG(QString);
-		void importJPG(QString);
-		
-		void addIndex(QString, int, double, double, double, double);
-		bool removeIndex(int);
+		int addIndex(QString, int, double, double, double, double);
 		void editIndex(int, QString, double, double, double, double);
+		bool removeIndex(int);
 
-		void addModule(QString, int, double, double = 0);
-		bool removeModule(int);
+		int addModule(QString, int, double);
 		void editModule(int, QString, double);
-		void show(){
-			qDebug() << "Indexes:";
-			foreach(int i, indexes.keys()){
-				qDebug() << i << ": { id:" << indexes[i].getId() << ", parent:" << indexes[i].getParentId() << ", name:" << indexes[i].getName() << " }";
-			}
-		}
+		bool removeModule(int);
+		void exportModuleAsXML(int, QString);
+
+		Value& valueAt(int);
+		bool removeValue(int);
+		void updateValue();
+		// void show(){
+		// 	qDebug() << "Indexes:";
+		// 	foreach(int i, indexes.keys()){
+		// 		qDebug() << i << ": { id:" << indexes[i].getId() << ", parent:" << indexes[i].getParentId() << ", name:" << indexes[i].getName() << " }";
+		// 	}
+		// 	qDebug() << "Modules:";
+		// 	foreach(int i, modules.keys()){
+		// 		qDebug() << i << ": { id:" << modules[i].getId() << ", parent:" << modules[i].getParentId() << ", name:" << modules[i].getName() << " }";
+		// 	}
+		// }
 	signals:
 		void changed();
 	};	

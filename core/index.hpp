@@ -21,6 +21,10 @@ namespace core {
 		double getBorneUnfav() const;
 		void setBorneFav(double);
 		void setBorneUnfav(double);
+		void updateValues();
+		
+		void toXML(QXmlStreamWriter&);
+		bool fromXML(QXmlStreamReader&);
 	signals:
 		void borneFavChanged();
 		void borneUnfavChanged();

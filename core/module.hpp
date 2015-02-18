@@ -10,12 +10,11 @@ namespace core {
 	class Module : public Value{
 		Q_OBJECT
    		Q_PROPERTY(QList<int> childs READ getChildsForQML NOTIFY childsChanged)
-	
 	private:
-		QVector<int> childs; 
+		QVector<int> childs;
 	public:
 		Module();
-		Module(QString, int, double, double);
+		Module(QString, int, double);
 		Module(const Module &m);
 		Module& operator=(const Module &m);
 		void addChild(int);
@@ -24,6 +23,10 @@ namespace core {
 		const QVector<int>& getChilds() const;
 		QList<int> getChildsForQML();
 		void setChilds(QVector<int>& childs);
+		void updateValues();
+
+		void toXML(QXmlStreamWriter&);
+		bool fromXML(QXmlStreamReader&);
 	signals:
 		void childsChanged();
 	};

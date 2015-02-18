@@ -358,7 +358,6 @@ Box.prototype.drawAt = function(x, y) {
 // Rendering function
 function render(){
 	console.log('Rendering ...');
-	app.show();
 	Box.clear();
 	Box.init();
 	Box.draw();

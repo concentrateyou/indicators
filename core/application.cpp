@@ -1,19 +1,21 @@
 #include "application.hpp"
+#include <cmath>
 #include <QFile>
-#include <QDataStream>
 #include <QDebug>
+
 using namespace core;
+
 void Application::init(){
-	qDebug() << "init called !";
+	// qDebug() << "init called !";
 	indexes.clear();
-	moduls.clear();
+	modules.clear();
+	indicator.setName("");
 	indicator.removeAllChilds();
+	Value::setApp(this);
 }
 void Application::create(QString name){
-	indicator.setId(0);
 	indicator.setName(name);
-	// a calculer
-	indicator.setValue(10.0);
+	indicator.setValue(-1);
 	emit changed();
 }
 void Application::load(QString fileName){
@@ -22,255 +24,112 @@ void Application::load(QString fileName){
 	binaryFile.open(QFile::ReadOnly);
 	data >> indicator;
 	data >> indexes;
-	data >> moduls;
+	data >> modules;
 	binaryFile.close();
 	emit changed(); 
 }
-void Application::save(QString fileName, Format format){
+void Application::save(QString fileName){
 	qDebug() << "Saving on : " << fileName;
 	QFile binaryFile(fileName);
 	QDataStream data(&binaryFile);
 	binaryFile.open(QFile::WriteOnly);
 	data << indicator;
 	data << indexes;
-	data << moduls;
+	data << modules;
 	binaryFile.close();
 }
 
-void Application::export(QString fileName, Format format){
+void Application::exportAs(QString fileName, Format format){
 	switch(format){
 		case XML: 
-			exportXML(fileName); 
-			break;
+			exportAsXML(fileName); 
+		break;
 		case PDF:
-			exportPDF(fileName); 
-			break;
+			exportAsPDF(fileName); 
+		break;
 		case JPG:
-			exportJPG(fileName); 
-			break;;
+			exportAsJPG(fileName); 
+		break;;
 		case CSV: 
-			exportCSV(fileName); 
-			break;
+			exportAsCSV(fileName); 
+		break;
 		case EXCEL: 
-			exportEXCEL(fileName); 
-			break;
-	}
-
-}
-void Application::import(QString fileName, Format format){
-	switch(format){
-		case XML: 
-			importXML(fileName); 
-			break;
-		case PDF:
-			importPDF(fileName); 
-			break;
-		case JPG:
-			importJPG(fileName); 
-			break;;
-		case CSV: 
-
-			importCSV(fileName); 
-			break;
-		case EXCEL: 
-			importEXCEL(fileName); 
-			break;
+			exportAsEXCEL(fileName); 
+		break;
 	}
 }
-void Application::exportXML(QString fileName){
-	int id;
+
+void Application::exportAsXML(QString fileName){
 	QFile xmlFile(fileName);
 	QXmlStreamWriter xmlWriter(&xmlFile);
 	xmlFile.open(QFile::WriteOnly);
     xmlWriter.setAutoFormatting(true);
     xmlWriter.writeStartDocument();
-	    xmlWriter.writeStartElement("indicator");
-	    xmlWriter.writeAttribute("id", indicator.getId());
-	    xmlWriter.writeAttribute("name", indicator.getName());
-	    xmlWriter.writeAttribute("value", indicator.getValue());
-		writeDocumentXML(indicator.getChilds());	    
-	    xmlWriter.writeEndElement();
+    indicator.toXML(xmlWriter);
     xmlWriter.writeEndDocument();
     xmlFile.close();
 }
-void Application::writeDocumentXML(QVector<int>& childs){
 
-for (int i = 0; i < childs.size(); ++i)
-   	{	
-		if(indexes.contains(childs[i])){
-			id = childs[i];
-			Index& index = indexes[id];
-			xmlWriter.writeStartElement("index");
-				xmlWriter.writeAttribute("id", id);
-				xmlWriter.writeAttribute("parentId", index.getParentId());
-				xmlWriter.writeAttribute("name", index.getName());
-				xmlWriter.writeAttribute("weigth", index.getWeight());
-				xmlWriter.writeAttribute("value", index.getValue());
-				xmlWriter.writeAttribute("borneFav", index.getBorneFav());
-				xmlWriter.writeAttribute("borneUnfav", index.getBorneUnfav());
-				xmlWriter.writeCharacters(index.getName());
-			xmlWriter.writeEndElement();
-		} else if(moduls.contains(childs[i])){
-			id = childs[i];
-			Module& module = moduls[id];
-			xmlWriter.writeStartElement("module");
-				xmlWriter.writeAttribute("id", id);
-				xmlWriter.writeAttribute("parentId", module.getParentId());
-				xmlWriter.writeAttribute("name", module.getName());
-				xmlWriter.writeAttribute("weigth", module.getWeight());
-				xmlWriter.writeAttribute("value", module.getValue());
-				writeDocumentXML(module.getChilds());
-			xmlWriter.writeEndElement();
-		}
-   	}
+void Application::exportModuleAsXML(int id, QString fileName){
+	if(modules.contains(id)){
+		QFile xmlFile(fileName);
+		QXmlStreamWriter xmlWriter(&xmlFile);
+		xmlFile.open(QFile::WriteOnly);
+	    xmlWriter.setAutoFormatting(true);
+	    xmlWriter.writeStartDocument();
+	    modules[id].toXML(xmlWriter);
+	    xmlWriter.writeEndDocument();
+	    xmlFile.close();
+	}
 }
-void Application::importXML(QString fileName){
-	QString id, name, value, parentId, weigth, borneFav, borneUnfav;
 
+bool Application::importXML(QString fileName){
+	bool result;
     QFile xmlFile(fileName);
     QXmlStreamReader xmlReader(&xmlFile);
     xmlFile.open(QFile::ReadOnly);
-    xmlReader.readNext();
-    while(!xmlReader.atEnd() && !xmlReader.hasError()) {
-     //   QXmlStreamReader::TokenType token = xmlReader.readNext();
-        if(xmlReader.isStartElement() && xmlReader.name() == "indicator"){
-        	id = xmlReader.attributes().value("id").toString();
-        	indicator.setId(id.toInt());
-        	name = xmlReader.attributes().value("name").toString();
-        	indicator.setName(name);
-        	value = xmlReader.attributes().value("value").toString();
-        	indicator.setValue(value.toDouble());
-
-        	readDocumentXML(xmlReader.readNext());
-
-/*
-            if(xmlReader.name("index")){
-            	id = xmlReader.attributes().value("id").toString();
-	        	indicator.addChild(id);
-
-	        	parentId = xmlReader.attributes().value("parentId").toString();
-	        	name = xmlReader.attributes().value("name").toString();	
-	     		weigth = xmlReader.attributes().value("weigth").toString();
-	        	value = xmlReader.attributes().value("value").toString();
-	        	borneFav = xmlReader.attributes().value("borneFav").toString();
-	        	borneUnfav = xmlReader.attributes().value("borneUnfav").toString();
-				Index index(name, parentId.toInt(), weigth.toDouble(), value.toDouble(), borneFav.toDouble(), borneUnfav.toDouble());
-				indexes.insert(id, index);
-            }else if(xmlReader.name("module")){
-            	id = xmlReader.attributes().value("id").toString();
-	        	indicator.addChild(id);
-
-	        	parentId = xmlReader.attributes().value("parentId").toString();
-	        	name = xmlReader.attributes().value("name").toString();	
-	     		weigth = xmlReader.attributes().value("weigth").toString();
-	        	value = xmlReader.attributes().value("value").toString();
-
-
-            }
-
-*/
+    qDebug() << "Start Importing XML";
+    while(!xmlReader.atEnd() && !xmlReader.hasError()){
+    	xmlReader.readNext();
+        if(xmlReader.isStartElement() && xmlReader.name().compare("indicator") == 0){
+		    qDebug() << "Indicator Found !";
+        	result = indicator.fromXML(xmlReader);
+        	break;
         }
     }
     if(xmlReader.hasError())
-    	qDebug() << "Error while reading the xml !";
-    else
-    	qDebug() << "XML name: " << name;
+    	result = false;
     xmlReader.clear();
     xmlFile.close();
+    return result;
 }
 
-void Application::readDocumentXML(QXmlStreamReader::TokenType xmlReader){
 
-if(xmlReader.name("index")){
-    	id = xmlReader.attributes().value("id").toString();
-    	indicator.addChild(id);
 
-    	parentId = xmlReader.attributes().value("parentId").toString();
-    	name = xmlReader.attributes().value("name").toString();	
- 		weigth = xmlReader.attributes().value("weigth").toString();
-    	value = xmlReader.attributes().value("value").toString();
-    	borneFav = xmlReader.attributes().value("borneFav").toString();
-    	borneUnfav = xmlReader.attributes().value("borneUnfav").toString();
-		Index index(name, parentId.toInt(), weigth.toDouble(), value.toDouble(), borneFav.toDouble(), borneUnfav.toDouble());
-		indexes.insert(id, index);
-    }else if(xmlReader.name("module")){
-    	id = xmlReader.attributes().value("id").toString();
-    	indicator.addChild(id);
-
-    	parentId = xmlReader.attributes().value("parentId").toString();
-    	name = xmlReader.attributes().value("name").toString();	
- 		weigth = xmlReader.attributes().value("weigth").toString();
-    	value = xmlReader.attributes().value("value").toString();
-		xmlReader.readNext();
-    	readDocumentXML(xmlReader);
-		Module module(name, parentId.toInt(), weight.toDouble(), value.toDouble());
-		moduls.insert(id, module);
-    }
+void Application::exportAsPDF(QString fileName){
 
 }
-void Application::exportPDF(QString fileName){
+void Application::exportAsCSV(QString fileName){
 
 }
-void Application::importPDF(QString fileName){
+void Application::exportAsEXCEL(QString fileName){
 
 }
-void Application::exportCSV(QString fileName){
-
-}
-void Application::importCSV(QString fileName){
-
-}
-void Application::exportEXCEL(QString fileName){
-
-}
-void Application::importEXCEL(QString fileName){
-
-}
-void Application::exportJPG(QString fileName){
-
-}
-void Application::importJPG(QString fileName){
+void Application::exportAsJPG(QString fileName){
 
 }
 
-void Application::addIndex(QString name, int parentId, double weight, double value, double borneFav, double borneUnfav){
+int Application::addIndex(QString name, int parentId, double weight, double value, double borneFav, double borneUnfav){
 	Index index(name, parentId, weight, value, borneFav, borneUnfav);
 	indexes.insert(index.getId(), index);
-	if(indicator.getId() == parentId){
+	if(0 == parentId){
 		indicator.addChild(index.getId());
-	}else{
-		Module& module = moduls[parentId];
+	} else {
+		Module& module = modules[parentId];
 		module.addChild(index.getId());
 	}
 	emit changed();
-
-}
-bool Application::removeIndex(int id){
-	bool result = false;
-	qDebug() << "removing index:" << id;
-	if(indexes.contains(id)){
-		int pid = indexes[id].getParentId(); 
-		if(pid == 0)
-			indicator.removeChild(id);
-		else
-			moduls[pid].removeChild(id);
-		indexes.remove(id);
-		result = true;
-	}
-	// if(indicator.getChild(id) != -1){
-	// 	if(indexes.remove(id) != 0)
-	// 		if(indicator.removeChild(id) == true)
-	// 			result = true;
-	// 		else
-	// 			result = false;
-	// 	else
-	// 		result = false;
-	// } else
-	// 	result = false;
-
-	if(result)
-		emit changed();
-	return result;
+	return index.getId();
 }
 void Application::editIndex(int id, QString name, double weight, double value, double borneFav, double borneUnfav){
 	if(indexes.contains(id)){
@@ -283,56 +142,99 @@ void Application::editIndex(int id, QString name, double weight, double value, d
 		emit changed();
 	}
 }
-
-void Application::addModule(QString name, int parentId, double weight, double value){
-	Module module(name, parentId, weight, value);
-	moduls.insert(module.getId(), module);
-	if(indicator.getId() == parentId){
+int Application::addModule(QString name, int parentId, double weight){
+	Module module(name, parentId, weight);
+	modules.insert(module.getId(), module);
+	if(0 == parentId){
 		indicator.addChild(module.getId());
 	}else{
-		Module& module2 = moduls[parentId];
+		Module& module2 = modules[parentId];
 		module2.addChild(module.getId());
 	}
 	emit changed();
-}
-bool Application::removeModule(int id){
-	// if(indicator.getChild(id) != -1){
-	// 	if(moduls.remove(id) != 0){
-	// 		if(indicator.removeChild(id) == true)
-	// 			return true;
-	// 		else
-	// 			return false;
-
-	// 	}else{
-	// 		return false;
-	// 	}
-	// }else
-	// 	return false;
-	bool result = false;
-	qDebug() << "removing module:" << id;
-	if(moduls.contains(id)){
-		int pid = moduls[id].getParentId(); 
-		if(pid == 0)
-			indicator.removeChild(id);
-		else
-			moduls[pid].removeChild(id);
-		moduls.remove(id);
-		result = true;
-	}
-	if(result)
-		emit changed();
-	return result;
+	return module.getId();
 }
 void Application::editModule(int id, QString name, double weight){
-	if(moduls.contains(id)){
-		Module& module = moduls[id];
+	if(modules.contains(id)){
+		Module& module = modules[id];
 		module.setName(name);
 		module.setWeight(weight);
 		emit changed();
 	}
 }
-const QMap<int, Module>& Application::getModuls() const{
-	return moduls;
+
+Value& Application::valueAt(int id){
+	if(modules.contains(id))
+		return modules[id];
+	return indexes[id];
+}
+
+bool Application::removeValue(int id){
+	// qDebug() << "removing value with id : " << id;
+	bool result = false;
+	if(indexes.contains(id)){
+		// qDebug() << "this value is an index";
+		result = removeIndex(id);
+	} else if(modules.contains(id)){
+		// qDebug() << "this value is a module";
+		result = removeModule(id);
+	}
+	if(result)
+		emit changed();
+	return result;
+}
+bool Application::removeIndex(int id){
+	bool result = false;
+	// qDebug() << "removing index:" << id;
+	if(indexes.contains(id)){
+		// qDebug() << "  index found in indexes";
+		int pid = indexes[id].getParentId(); 
+		if(pid == 0){
+			// qDebug() << "  the parent is the indicator";
+			indicator.removeChild(id);
+		} else {
+			// qDebug() << "  the parent is a module";
+			modules[pid].removeChild(id);
+		}
+		if(indexes.remove(id) == 1){
+			// qDebug() << "  the index is removed :D";
+			result = true;
+		} else {
+			// qDebug() << "  the index is not removed :(";
+		}
+	}
+	return result;
+}
+bool Application::removeModule(int id){
+	bool result = false;
+	// qDebug() << "removing module: " << id;
+	if(modules.contains(id)){
+		Module& m = modules[id];
+		// qDebug() << "  the module exists in modules";
+		int pid = m.getParentId(); 
+		if(pid == 0){
+			// qDebug() << "  the parent is the indicator";
+			indicator.removeChild(id);
+		} else {
+			// qDebug() << "  the parent is a module";
+			modules[pid].removeChild(id);
+		}
+		foreach(int i, m.getChilds()){
+			// qDebug() << "removing child: " << i;
+			removeValue(i);
+		}
+		if(1 == modules.remove(id)){
+			// qDebug() << "  the module is removed :D";
+			result = true;
+		} else {
+			// qDebug() << "  the module is not removed :(";
+		}
+	}
+	return result;
+}
+
+const QMap<int, Module>& Application::getModules() const{
+	return modules;
 }
 const QMap<int, Index>& Application::getIndexes() const{
 	return indexes;
@@ -351,10 +253,10 @@ QList<QObject*> Application::getIndexesForQML() {
 	}
 	return list;
 }
-QList<QObject*> Application::getModulsForQML() {
+QList<QObject*> Application::getModulesForQML() {
 	QList<QObject*> list;
-	QMap<int, Module>::iterator it = moduls.begin();
-	while(it != moduls.end()){
+	QMap<int, Module>::iterator it = modules.begin();
+	while(it != modules.end()){
 		Module& rmodule = *it;
 		Module* pmodule = &rmodule;
 		list.append(pmodule);
@@ -364,6 +266,61 @@ QList<QObject*> Application::getModulsForQML() {
 }
 
 QObject* Application::getIndicatorForQML() {
-	qDebug() << "Indicator Requested !";
+	// qDebug() << "Indicator Requested !";
 	return &indicator;
+}
+
+void Application::updateValue(){
+	// Calculer la somme des poids des fils
+	double totalWeight = 0;
+	foreach(int id, indicator.getChilds()){
+		totalWeight += valueAt(id).getWeight();
+	}
+	// Construction de la table des calculs
+	int cols = indicator.getChilds().size();
+	int rows = pow(2, cols);
+	int i, j, k, l;
+	bool f;
+	Cell ** table = new Cell* [cols];
+	table[0] = new Cell[cols * rows];
+	for(j = 1; j < cols; ++j)
+		table[j] = table[0] + j * rows;
+	// Remplir la table par les valeurs F et U
+	j = 0; l = 1;
+	foreach(int id, indicator.getChilds()){
+		Value& v = valueAt(id);
+		v.updateValues();
+		i = 0; f = true;
+		while(i < rows){
+			for(k = 0; k < l; ++k){
+				table[j][i].id = v.getId();
+				table[j][i].isFav = f;
+				table[j][i].value = ( f ) ? v.getFValue() : v.getUValue();
+				++ i;
+			}
+			f = ! f;
+		}
+		++ j;
+		l = 2 * l;
+	}
+	// Calculer la valeur du module
+	// QDebug dd = qDebug();
+	double truthValuesSum = 0, fuzzySolution = 0, w, B;
+	// dd << "\n";
+	for(i = 0; i < rows; ++ i){
+		w = 1; B = 0;
+		for(j = 0; j < cols; ++ j){
+			// dd << ((table[j][i].isFav)? "F" : "U") << table[j][i].value << "(" << table[j][i].id << ")\t";
+			if(w > table[j][i].value)
+				w = table[j][i].value;
+			if(! table[j][i].isFav)
+				B += valueAt(table[j][i].id).getWeight() / totalWeight;
+		}
+		truthValuesSum += w;
+		fuzzySolution += w * B;
+		// dd << B << "\t" << w << "\n";
+	}
+	// dd << "fuzzySolution: " << fuzzySolution << "\n";
+	// dd << "truthValuesSum: " << truthValuesSum << "\n";
+	indicator.setValue(fuzzySolution / truthValuesSum);
 }
