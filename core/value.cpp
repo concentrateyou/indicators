@@ -108,7 +108,13 @@ void Value::computeFAndUValues(double borneF, double borneU){
 		fValue = 1 - uValue;
 	} else {
 		// borneF == borneU !!
-		fValue = 1;
-		uValue = 0;
+		if(value < borneF){
+			fValue = 1;
+			uValue = 0;
+		} else {
+			fValue = 0;
+			uValue = 1;
+		}
 	}
+	qDebug() << name << ": (BF:" << borneF << ", BU:" << borneU << ", V:" << value << " ) => ( FV:" << fValue << ", UV:" << uValue << ")";
 }

@@ -88,6 +88,7 @@ function doAction(filename){
 		break;
 		case 'import:module':
 			app.importModuleFromXML(tempId, filename);
+			moduleForm.close();
 			render();
 		break;
 		case 'export:module':
@@ -403,11 +404,12 @@ Box.prototype.drawAt = function(x, y) {
 };
 // Rendering function
 function render(){
-	app.updateValue();
-	Box.clear();
-	Box.init();
-	Box.draw();
-	console.log(Box.blocks[0].getWH());
+	if(app.indicator.name.trim() != ''){
+		app.updateValue();
+		Box.clear();
+		Box.init();
+		Box.draw();
+	}
 }
 
 // Checking Functions

@@ -85,14 +85,17 @@ ApplicationWindow {
                 }
             }
         }
-        Rectangle {
-            id: content
+        ScrollView {
             anchors.top: miniMenu.bottom
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "#cccccc"
-        }   
+            Rectangle {
+                id: content
+                width: parent.width
+                color: "#dddddd"
+            }
+        }
     }
     MessageDialog {
         id: messageDialog
