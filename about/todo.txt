@@ -1,4 +1,2 @@
-** Calcul automatique des valeurs à chaque modification
-Export des indicateurs en CSV
 Add Button for module import/Export
 Doxygen & Graphviz

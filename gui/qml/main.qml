@@ -129,6 +129,14 @@ ApplicationWindow {
             else
                 moduleForm.open();
         }
+        onExportClicked: {
+            Handler.setAction('export:module', num);
+            fileDialog.open();
+        }
+        onImportClicked: {
+            Handler.setAction('import:module', parentId);
+            fileDialog.open();
+        }
     }
     ExportForm {
         id: exportForm

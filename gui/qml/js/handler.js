@@ -39,8 +39,10 @@ function createIndicator(name){
 }
 
 // Menu actions handling
-function setAction(a){
+var tempId = null;
+function setAction(a, tid){
 	action = a;
+	tempId = tid;
 }
 function doAction(filename){
 	filename = filename.toString().replace('file://', '');
@@ -83,6 +85,15 @@ function doAction(filename){
 			app.init();
 			app.importXML(filename);
 			render();
+		break;
+		case 'import:module':
+			app.importModuleFromXML(tempId, filename);
+			render();
+		break;
+		case 'export:module':
+			if(filename.lastIndexOf('.') == -1 || filename.substring(filename.lastIndexOf('.')).trim() != '.xml')
+				filename += '.xml';
+			app.exportModuleAsXML(tempId, filename);
 		break;
 	}
 	action = null;

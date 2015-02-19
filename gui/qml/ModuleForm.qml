@@ -13,6 +13,9 @@ Dialog {
     property string weightField
     property string weightColor
 
+    signal importClicked
+    signal exportClicked
+
     title: "Add new module"
     standardButtons: StandardButton.Ok | StandardButton.Cancel
     width: moduleFormContent.width + 20
@@ -20,7 +23,20 @@ Dialog {
     GridLayout {
     	id: moduleFormContent
         columns: 2
-    	
+    	Button {
+            id: moduleImportBtn
+            visible: (num == -1)
+            text: "Import from XML"
+            Layout.columnSpan: 2
+            onClicked: importClicked()
+        }
+        Button {
+            id: moduleExportBtn
+            visible: (num != -1)
+            text: "Export from XML"
+            Layout.columnSpan: 2
+            onClicked: exportClicked()
+        }
         Text { 
             text: "Name"
         }
