@@ -9,42 +9,14 @@ import Indicators.Models 1.0
 import "js/handler.js" as Handler
 
 ApplicationWindow {
-    title: qsTr("Testing Dynamic QML")
-    width: 600
+    title: qsTr("Fuzzy Logic Indicator Manager")
+    width: 900
     height: 600
     visible: true
     App {
         id: app
         onChanged: Handler.render()
     }
-
-    // menuBar: MenuBar {
-    //     Menu {
-    //         title: "&File"
-    //         MenuItem {
-    //             text: "&New Indicator"
-    //             onTriggered: indicatorForm.open()
-    //         }
-    //         MenuItem {
-    //             text: "&Save Indicator"
-    //             onTriggered: {
-    //             	Handler.setAction('save');
-    //             	fileDialog.open();
-    //             }
-    //         }
-    //         MenuItem {
-    //             text: "L&oad Indicator"
-    //             onTriggered: {
-    //             	Handler.setAction('load');
-    //             	fileDialog.open();
-    //             }
-    //         }
-    //         MenuItem {
-    //             text: qsTr("E&xit")
-    //             onTriggered: Qt.quit();
-    //         }
-    //     }
-    // }
 
     ColumnLayout {
         anchors.fill: parent
@@ -90,6 +62,27 @@ ApplicationWindow {
                         fileDialog.open();
                     }
                 }
+                MiniButton {
+                    width: 70
+                    border.width: 0
+                    normalColor: '#999'
+                    hoverColor: '#bbb'
+                    text: 'Export'
+                    area.onClicked: {
+                        exportForm.open()
+                    }
+                }
+                MiniButton {
+                    width: 90
+                    border.width: 0
+                    normalColor: '#999'
+                    hoverColor: '#bbb'
+                    text: 'Import XML'
+                    area.onClicked: {
+                        Handler.setAction('import:XML')
+                        fileDialog.open()
+                    }
+                }
             }
         }
         Rectangle {
@@ -110,29 +103,39 @@ ApplicationWindow {
             messageDialog.open();
         }
     }
-
     IndicatorForm {
     	id: indicatorForm
         onAccepted: {
-        	if( nameField != '')
+        	if( Handler.check('indicator') )
         		Handler.createIndicator(nameField);
         	else
-        		indicatorForm.open();
+            	indicatorForm.open();
         }
     }
-
     IndexForm {
     	id: indexForm
         onAccepted: {
-        	Handler.submitIndex(parentId, num, nameField, weightField, borneFField, borneUField, valueField);
+            if( Handler.check('index') )
+            	Handler.submitIndex(parentId, num, nameField, weightField, borneFField, borneUField, valueField);
+            else
+                indexForm.open();
     	}
     }
-    
     ModuleForm {
-    	id: moduleForm
+        id: moduleForm
         onAccepted: {
-        	Handler.submitModule(parentId, num, nameField, weightField);
-    	}
+            if( Handler.check('module') )
+                Handler.submitModule(parentId, num, nameField, weightField);
+            else
+                moduleForm.open();
+        }
+    }
+    ExportForm {
+        id: exportForm
+        onAccepted: {
+            Handler.setAction('export:' + extension);
+            fileDialog.open();
+        }
     }
     FileDialog {
     	id: fileDialog
@@ -141,11 +144,9 @@ ApplicationWindow {
 			Handler.doAction(fileDialog.fileUrl)
 		}
     }
-
     Component.onCompleted: {
         Handler.init()
     }
     onWidthChanged : Handler.render()
     onHeightChanged : Handler.render()
-
 }

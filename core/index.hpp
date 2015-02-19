@@ -23,6 +23,7 @@ namespace core {
 		void setBorneUnfav(double);
 		void updateValues();
 		
+		void toCSV(int, QTextStream&);
 		void toXML(QXmlStreamWriter&);
 		bool fromXML(QXmlStreamReader&);
 	signals:

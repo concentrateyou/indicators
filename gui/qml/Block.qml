@@ -7,6 +7,10 @@ import QtQuick.Layouts 1.1
 Rectangle {
 	id: block
 	property alias name: nameTxt.text
+	property alias weight: weightTxt.text
+	property alias borneF: borneFTxt.text
+	property alias borneU: borneUTxt.text
+	property alias value: valueTxt.text
 	property alias withClose: closeBtn.visible
 	property alias withIndexAdd: indexAddBtn.visible
 	property alias withModuleAdd: moduleAddBtn.visible
@@ -29,7 +33,7 @@ Rectangle {
 			return topMenu.width
 		return content.width
 	}
-	height: 70
+	height: topMenu.height + content.height
 	border.width: 2
 	border.color: '#000000'
 
@@ -92,19 +96,48 @@ Rectangle {
 	RowLayout {
 		id: content
 		anchors.top: topMenu.bottom
-		anchors.bottom: parent.bottom
 		anchors.horizontalCenter: parent.horizontalCenter
 		Item { 
 			width: 2
 		}
-		Text {
-			id: nameTxt
-			anchors.centerIn: parent
-			text: 'Unknown'
+		ColumnLayout {
+			Text {
+				id: nameTxt
+				height: 30
+				anchors.horizontalCenter: parent.horizontalCenter
+				text: 'Unknown'
+			}
+			Text {
+				id: valueTxt
+				height: 30
+				anchors.horizontalCenter: parent.horizontalCenter
+				text: 'V: '
+			}
+			Text {
+				id: weightTxt
+				height: 30
+				anchors.horizontalCenter: parent.horizontalCenter
+				text: 'W: '
+				visible: (type != 'indicator')
+			}
+			Text {
+				id: borneFTxt
+				height: 30
+				anchors.horizontalCenter: parent.horizontalCenter
+				text: 'BF: '
+				visible: (type == 'index')
+			}
+			Text {
+				id: borneUTxt
+				height: 30
+				anchors.horizontalCenter: parent.horizontalCenter
+				text: 'BU: '
+				visible: (type == 'index')
+			}
+			Item {
+				height: 5
+			}
 		}
-		// U: 
-		// F:
-		// 
 		Item { 
 			width: 2
 		}

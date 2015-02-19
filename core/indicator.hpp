@@ -7,6 +7,7 @@
 #include <QDataStream>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QTextStream>
 
 namespace core {
 	class Indicator : public QObject{
@@ -35,6 +36,7 @@ namespace core {
 		bool removeChild(int);
 		void removeAllChilds();
 
+		void toCSV(QTextStream&);
 		void toXML(QXmlStreamWriter&);
 		bool fromXML(QXmlStreamReader&);
 	signals:

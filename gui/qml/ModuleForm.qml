@@ -3,12 +3,15 @@ import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.3
 
 Dialog {
     property int num: -1
     property int parentId: -1
     property string nameField
+    property string nameColor
     property string weightField
+    property string weightColor
 
     title: "Add new module"
     standardButtons: StandardButton.Ok | StandardButton.Cancel
@@ -24,6 +27,13 @@ Dialog {
         TextField {
             width: 200
             text: nameField
+            style: TextFieldStyle {
+                textColor: nameColor
+                background: Rectangle {
+                    border.color: nameColor
+                    border.width: 1
+                }
+            }
             onTextChanged: nameField = text
         }
 
@@ -33,6 +43,13 @@ Dialog {
         TextField {
             width: 200
             text: weightField
+            style: TextFieldStyle {
+                textColor: weightColor
+                background: Rectangle {
+                    border.color: weightColor
+                    border.width: 1
+                }
+            }
             onTextChanged: weightField = text
         }
     }

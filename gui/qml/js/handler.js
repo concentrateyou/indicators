@@ -43,23 +43,49 @@ function setAction(a){
 	action = a;
 }
 function doAction(filename){
+	filename = filename.toString().replace('file://', '');
 	switch(action){
 		case 'save':
-			saveIndicator(filename);
+			app.save(filename);
 		break;
 		case 'load':
-			loadIndicator(filename);
+			app.load(filename);
+		break;
+		case 'export:PDF':
+			miniMenu.height = 0;
+			content.color = '#ffffff';
+			if(filename.lastIndexOf('.') == -1 || filename.substring(filename.lastIndexOf('.')).trim() != '.pdf')
+				filename += '.pdf';
+			app.exportAsPDF(filename);
+			content.color = '#cccccc';
+			miniMenu.height = 35;
+		break;
+		case 'export:PNG':
+			miniMenu.height = 0;
+			content.color = '#ffffff';
+			if(filename.lastIndexOf('.') == -1 || filename.substring(filename.lastIndexOf('.')).trim() != '.png')
+				filename += '.png';
+			app.exportAsJPG(filename);
+			content.color = '#cccccc';
+			miniMenu.height = 35;
+		break;
+		case 'export:XML':
+			if(filename.lastIndexOf('.') == -1 || filename.substring(filename.lastIndexOf('.')).trim() != '.xml')
+				filename += '.xml';
+			app.exportAsXML(filename);
+		break;
+		case 'export:CSV':
+			if(filename.lastIndexOf('.') == -1 || filename.substring(filename.lastIndexOf('.')).trim() != '.csv')
+				filename += '.csv';
+			app.exportAsCSV(filename);
+		break;
+		case 'import:XML':
+			app.init();
+			app.importXML(filename);
+			render();
 		break;
 	}
 	action = null;
-}
-function saveIndicator(filename){
-	console.log('saving ...');
-	app.save(filename.toString().replace('file://', ''));
-}
-function loadIndicator(filename){
-	console.log('loading ...');
-	app.load(filename.toString().replace('file://', ''));
 }
 
 // Indexes Handling
@@ -215,6 +241,7 @@ Box.prototype.makeComponent = function(){
 Box.prototype.makeIndicator = function(){
 	var self = this;
 	this.component.withReduce = this.component.withClose = false;
+	this.component.value = Box.data.indicator.value;
 	this.component.indexAddClicked.connect(function(){
 		indexForm.parentId = 0;
 		indexForm.num = -1;
@@ -240,8 +267,13 @@ Box.prototype.makeIndicator = function(){
 Box.prototype.makeIndex = function(){
 	var self = this;
 	this.component.withIndexAdd = this.component.withModuleAdd = this.component.withReduce = false;
+	this.component.value = Box.data.indexes[self.dataId].value;
+	this.component.weight = 'W: ' + Box.data.indexes[self.dataId].weight;
+	this.component.borneF = 'BF: ' + Box.data.indexes[self.dataId].borneFav;
+	this.component.borneU = 'BU: ' + Box.data.indexes[self.dataId].borneUnfav;
 	this.component.closed.connect(function(){
 		app.removeIndex(self.id);
+		render();
 	});
 	this.component.doubleClicked.connect(function(){
 		indexForm.parentId = -1;
@@ -257,10 +289,13 @@ Box.prototype.makeIndex = function(){
 Box.prototype.makeModule = function(){
 	var self = this;
 	this.component.withIndexAdd = this.component.withModuleAdd = this.component.withReduce = true;
+	this.component.value = Box.data.modules[self.dataId].value;
+	this.component.weight = 'W: ' + Box.data.modules[self.dataId].weight;
 	if(Box.reduced.indexOf(this.id) != -1)
 		this.component.isReduced = true;
 	this.component.closed.connect(function(){
 		app.removeModule(self.id);
+		render();
 	});
 	this.component.reduced.connect(function(){
 		Box.reduced.push(self.id);
@@ -357,9 +392,81 @@ Box.prototype.drawAt = function(x, y) {
 };
 // Rendering function
 function render(){
-	console.log('Rendering ...');
+	app.updateValue();
 	Box.clear();
 	Box.init();
 	Box.draw();
 	console.log(Box.blocks[0].getWH());
+}
+
+// Checking Functions
+function check(form){
+	var result = false;
+	switch(form){
+		case 'indicator':
+			result = checkIndicator();
+		break;
+		case 'index':
+			result = checkIndex();
+		break;
+		case 'module':
+			result = checkModule();
+		break;
+	}
+	return result;
+}
+function checkIndicator(){
+	var result = true;
+	
+	if(indicatorForm.nameField.trim() == ''){
+		result = false;
+		indicatorForm.nameColor = '#ee0000';
+	} else indicatorForm.nameColor = '#000000';
+	
+	return result;
+}
+function checkIndex(){
+	var result = true;
+
+	if(indexForm.nameField.trim() == ''){
+		result = false;
+		indexForm.nameColor = '#ee0000';
+	} else indexForm.nameColor = '#000000';
+	
+	if(isNaN(indexForm.weightField) || indexForm.weightField.trim() == ''){
+		result = false;
+		indexForm.weightColor = '#ee0000';
+	} else indexForm.weightColor = '#000000';
+
+	if(isNaN(indexForm.borneFField) || indexForm.borneFField.trim() == ''){
+		result = false;
+		indexForm.borneFColor = '#ee0000';
+	} else indexForm.borneFColor = '#000000';
+
+	if(isNaN(indexForm.borneUField) || indexForm.borneUField.trim() == ''){
+		result = false;
+		indexForm.borneUColor = '#ee0000';
+	} else indexForm.borneUColor = '#000000';
+
+	if(isNaN(indexForm.valueField) || indexForm.valueField.trim() == ''){
+		result = false;
+		indexForm.valueColor = '#ee0000';
+	} else indexForm.valueColor = '#000000';
+
+	return result;
+}
+function checkModule(){
+	var result = true;
+
+	if(moduleForm.nameField.trim() == ''){
+		result = false;
+		moduleForm.nameColor = '#ee0000';
+	} else moduleForm.nameColor = '#000000';
+	
+	if(isNaN(moduleForm.weightField) || moduleForm.weightField.trim() == ''){
+		result = false;
+		moduleForm.weightColor = '#ee0000';
+	} else moduleForm.weightColor = '#000000';
+
+	return result;
 }

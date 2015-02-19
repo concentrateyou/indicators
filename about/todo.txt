@@ -1,8 +1,4 @@
 ** Calcul automatique des valeurs à chaque modification
-Import/Export des modules en XML
-Import/Export des indicateurs en XML
-Export des indicateurs en PDF, JPG*, CSV
-Vérification des données entrées en formulaires
-Affichage de l'état de chaque indice/module (par couleur ou valeur)
-	Afficher les U, F, W, et V sur les blcoks
+Export des indicateurs en CSV
+Add Button for module import/Export
 Doxygen & Graphviz

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<indicator name="Sample" value="0.175">
+    <module name="A" weight="0.6" value="0">
+        <index name="R" weight="0.2" value="0.978" borne-favorable="0.9" borne-unfavorable="0.7"/>
+        <index name="d" weight="0.6" value="0.998" borne-favorable="0.9" borne-unfavorable="0.7"/>
+        <index name="p" weight="0.2" value="0.6" borne-favorable="0.1" borne-unfavorable="0.05"/>
+    </module>
+    <module name="B" weight="0.2" value="0.25">
+        <index name="Rp" weight="0.5" value="0.3" borne-favorable="0.1" borne-unfavorable="0.5"/>
+        <index name="wk" weight="0.5" value="0.783" borne-favorable="0.7" borne-unfavorable="0.3"/>
+    </module>
+    <module name="C" weight="0.2" value="0">
+        <index name="IR" weight="1" value="0.162" borne-favorable="1" borne-unfavorable="10"/>
+    </module>
+</indicator>

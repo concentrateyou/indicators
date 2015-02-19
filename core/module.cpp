@@ -92,6 +92,14 @@ void Module::updateValues(){
 	value = fuzzySolution / truthValuesSum;
 	computeFAndUValues(0, 1);	
 }
+void Module::toCSV(int pos, QTextStream& csv){
+	for(int i = 0; i < pos; ++i)
+		csv << " ,";
+	csv << name << ": " << value << " ( W:" << weight << " ),\n";
+	foreach(int i, childs){
+		Value::at(i).toCSV(pos + 1, csv);
+	}
+}
 void Module::toXML(QXmlStreamWriter& w){
 	w.writeStartElement("module");
     w.writeAttribute("name", name);
@@ -113,7 +121,7 @@ bool Module::fromXML(QXmlStreamReader& r){
     	value = r.attributes().value("value").toDouble();
     	r.readNext();
     	qDebug() << "Shearing for childs ...";
-    	while( !r.atEnd() && !r.hasError() && result){
+    	while( !r.atEnd() && !r.isEndElement() && !r.hasError() && result){
     		if(r.isStartElement()){
     			qDebug() << "Something found";
     			if(r.name().compare("module") == 0){

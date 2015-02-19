@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QTextStream>
 
 namespace core {
 	class Application;
@@ -52,6 +53,7 @@ namespace core {
 		void setWeight(double);
 		void computeFAndUValues(double, double);
 		virtual void updateValues() = 0;
+		virtual void toCSV(int, QTextStream&) = 0;
 		virtual void toXML(QXmlStreamWriter&) = 0;
 		virtual bool fromXML(QXmlStreamReader&) = 0;
 	signals:

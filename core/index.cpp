@@ -34,6 +34,12 @@ void Index::updateValues(){
 	// Computing the F and U values 
 	computeFAndUValues(borneFav, borneUnfav);
 }
+void Index::toCSV(int pos, QTextStream& csv){
+	for(int i = 0; i < pos; ++i)
+		csv << " ,";
+	csv << name << ": " << value << " ( W:" << weight << " F:" << borneFav << " U:" << borneUnfav << " )\n";
+}
+
 void Index::toXML(QXmlStreamWriter& w){
 	w.writeStartElement("index");
 	w.writeAttribute("name", name);

@@ -2,8 +2,19 @@
 #include <cmath>
 #include <QFile>
 #include <QDebug>
+#include <QImage>
+#include <QQuickWindow>
+#include <QPrinter>
+#include <QPainter>
+#include <QTextStream>
 
 using namespace core;
+
+QQmlApplicationEngine* Application::engine = NULL;
+
+void Application::setEngine(QQmlApplicationEngine* e){
+	engine = e;
+}
 
 void Application::init(){
 	// qDebug() << "init called !";
@@ -12,6 +23,7 @@ void Application::init(){
 	indicator.setName("");
 	indicator.removeAllChilds();
 	Value::setApp(this);
+	emit changed();
 }
 void Application::create(QString name){
 	indicator.setName(name);
@@ -53,9 +65,6 @@ void Application::exportAs(QString fileName, Format format){
 		case CSV: 
 			exportAsCSV(fileName); 
 		break;
-		case EXCEL: 
-			exportAsEXCEL(fileName); 
-		break;
 	}
 }
 
@@ -87,6 +96,7 @@ bool Application::importXML(QString fileName){
     	result = false;
     xmlReader.clear();
     xmlFile.close();
+    emit changed();
     return result;
 }
 void Application::exportModuleAsXML(int id, QString fileName){
@@ -123,17 +133,51 @@ bool Application::importModuleFromXML(int parentId, QString fileName){
     return result;
 }
 
-void Application::exportAsPDF(QString fileName){
-
+bool Application::exportAsPDF(QString fileName){
+	bool result = false;
+	if(engine != NULL){
+		foreach(QObject* obj, engine->rootObjects()) {
+			QQuickWindow* window = qobject_cast<QQuickWindow*>(obj);
+			if (window) {
+				QImage image = window->grabWindow();
+				// qDebug() << "Saving the image to : " << fileName;
+				// result = image.save(fileName, 0, 100);
+				QPrinter printer(QPrinter::ScreenResolution);
+				// QPrinter printer;
+				printer.setOutputFormat(QPrinter::PdfFormat);
+				// printer.setColorMode(QPrinter::Color);
+				printer.setOutputFileName(fileName);
+				printer.setPageSize(QPrinter::A3);
+				printer.setPageOrientation(QPageLayout::Landscape); 
+				QPainter painter(&printer);
+				painter.drawImage(QPoint(0, 0), image);
+				painter.end();
+			}
+		}
+	}
+	return result;
 }
+
+bool Application::exportAsJPG(QString fileName){
+	bool result = false;
+	if(engine != NULL){
+		foreach(QObject* obj, engine->rootObjects()) {
+			QQuickWindow* window = qobject_cast<QQuickWindow*>(obj);
+			if (window) {
+				QImage image = window->grabWindow();
+				result = image.save(fileName, 0, 100);
+			}
+		}
+	}
+	return result;
+}
+
 void Application::exportAsCSV(QString fileName){
-
-}
-void Application::exportAsEXCEL(QString fileName){
-
-}
-void Application::exportAsJPG(QString fileName){
-
+	QFile file(fileName);
+	QTextStream csv(&file);
+	file.open(QFile::WriteOnly);
+	indicator.toCSV(csv);
+	file.close();
 }
 
 int Application::addIndex(QString name, int parentId, double weight, double value, double borneFav, double borneUnfav){
@@ -196,8 +240,6 @@ bool Application::removeValue(int id){
 		// qDebug() << "this value is a module";
 		result = removeModule(id);
 	}
-	if(result)
-		emit changed();
 	return result;
 }
 bool Application::removeIndex(int id){
@@ -220,6 +262,8 @@ bool Application::removeIndex(int id){
 			// qDebug() << "  the index is not removed :(";
 		}
 	}
+	if(result)
+		emit changed();
 	return result;
 }
 bool Application::removeModule(int id){
@@ -247,6 +291,8 @@ bool Application::removeModule(int id){
 			// qDebug() << "  the module is not removed :(";
 		}
 	}
+	if(result)
+		emit changed();
 	return result;
 }
 
@@ -287,57 +333,69 @@ QObject* Application::getIndicatorForQML() {
 	return &indicator;
 }
 
+bool Application::validValues(){
+	bool result = true;
+	foreach(int i, modules.keys()){
+		if(modules[i].getChilds().size() == 0)
+			result = false;
+	}
+	return result;
+}
 void Application::updateValue(){
-	// Calculer la somme des poids des fils
-	double totalWeight = 0;
-	foreach(int id, indicator.getChilds()){
-		totalWeight += valueAt(id).getWeight();
-	}
-	// Construction de la table des calculs
-	int cols = indicator.getChilds().size();
-	int rows = pow(2, cols);
-	int i, j, k, l;
-	bool f;
-	Cell ** table = new Cell* [cols];
-	table[0] = new Cell[cols * rows];
-	for(j = 1; j < cols; ++j)
-		table[j] = table[0] + j * rows;
-	// Remplir la table par les valeurs F et U
-	j = 0; l = 1;
-	foreach(int id, indicator.getChilds()){
-		Value& v = valueAt(id);
-		v.updateValues();
-		i = 0; f = true;
-		while(i < rows){
-			for(k = 0; k < l; ++k){
-				table[j][i].id = v.getId();
-				table[j][i].isFav = f;
-				table[j][i].value = ( f ) ? v.getFValue() : v.getUValue();
-				++ i;
+	if(validValues()){
+		// Calculer la somme des poids des fils
+		double totalWeight = 0;
+		foreach(int id, indicator.getChilds()){
+			totalWeight += valueAt(id).getWeight();
+		}
+		// Construction de la table des calculs
+		int cols = indicator.getChilds().size();
+		int rows = pow(2, cols);
+		int i, j, k, l;
+		bool f;
+		Cell ** table = new Cell* [cols];
+		table[0] = new Cell[cols * rows];
+		for(j = 1; j < cols; ++j)
+			table[j] = table[0] + j * rows;
+		// Remplir la table par les valeurs F et U
+		j = 0; l = 1;
+		foreach(int id, indicator.getChilds()){
+			Value& v = valueAt(id);
+			v.updateValues();
+			i = 0; f = true;
+			while(i < rows){
+				for(k = 0; k < l; ++k){
+					table[j][i].id = v.getId();
+					table[j][i].isFav = f;
+					table[j][i].value = ( f ) ? v.getFValue() : v.getUValue();
+					++ i;
+				}
+				f = ! f;
 			}
-			f = ! f;
+			++ j;
+			l = 2 * l;
 		}
-		++ j;
-		l = 2 * l;
-	}
-	// Calculer la valeur du module
-	// QDebug dd = qDebug();
-	double truthValuesSum = 0, fuzzySolution = 0, w, B;
-	// dd << "\n";
-	for(i = 0; i < rows; ++ i){
-		w = 1; B = 0;
-		for(j = 0; j < cols; ++ j){
-			// dd << ((table[j][i].isFav)? "F" : "U") << table[j][i].value << "(" << table[j][i].id << ")\t";
-			if(w > table[j][i].value)
-				w = table[j][i].value;
-			if(! table[j][i].isFav)
-				B += valueAt(table[j][i].id).getWeight() / totalWeight;
+		// Calculer la valeur du module
+		// QDebug dd = qDebug();
+		double truthValuesSum = 0, fuzzySolution = 0, w, B;
+		// dd << "\n";
+		for(i = 0; i < rows; ++ i){
+			w = 1; B = 0;
+			for(j = 0; j < cols; ++ j){
+				// dd << ((table[j][i].isFav)? "F" : "U") << table[j][i].value << "(" << table[j][i].id << ")\t";
+				if(w > table[j][i].value)
+					w = table[j][i].value;
+				if(! table[j][i].isFav)
+					B += valueAt(table[j][i].id).getWeight() / totalWeight;
+			}
+			truthValuesSum += w;
+			fuzzySolution += w * B;
+			// dd << B << "\t" << w << "\n";
 		}
-		truthValuesSum += w;
-		fuzzySolution += w * B;
-		// dd << B << "\t" << w << "\n";
+		// dd << "fuzzySolution: " << fuzzySolution << "\n";
+		// dd << "truthValuesSum: " << truthValuesSum << "\n";
+		indicator.setValue(fuzzySolution / truthValuesSum);
+	} else {
+		indicator.setValue(-1);
 	}
-	// dd << "fuzzySolution: " << fuzzySolution << "\n";
-	// dd << "truthValuesSum: " << truthValuesSum << "\n";
-	indicator.setValue(fuzzySolution / truthValuesSum);
 }

@@ -21,7 +21,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_core__Application_t {
     QByteArrayData data[31];
-    char stringdata[319];
+    char stringdata[317];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,35 +43,35 @@ QT_MOC_LITERAL(9, 68, 6), // "Format"
 QT_MOC_LITERAL(10, 75, 11), // "exportAsXML"
 QT_MOC_LITERAL(11, 87, 11), // "exportAsPDF"
 QT_MOC_LITERAL(12, 99, 11), // "exportAsCSV"
-QT_MOC_LITERAL(13, 111, 13), // "exportAsEXCEL"
-QT_MOC_LITERAL(14, 125, 11), // "exportAsJPG"
-QT_MOC_LITERAL(15, 137, 8), // "addIndex"
-QT_MOC_LITERAL(16, 146, 9), // "editIndex"
-QT_MOC_LITERAL(17, 156, 11), // "removeIndex"
-QT_MOC_LITERAL(18, 168, 9), // "addModule"
-QT_MOC_LITERAL(19, 178, 10), // "editModule"
-QT_MOC_LITERAL(20, 189, 12), // "removeModule"
-QT_MOC_LITERAL(21, 202, 17), // "exportModuleAsXML"
-QT_MOC_LITERAL(22, 220, 19), // "importModuleFromXML"
-QT_MOC_LITERAL(23, 240, 7), // "valueAt"
-QT_MOC_LITERAL(24, 248, 11), // "removeValue"
-QT_MOC_LITERAL(25, 260, 11), // "updateValue"
-QT_MOC_LITERAL(26, 272, 4), // "show"
-QT_MOC_LITERAL(27, 277, 9), // "indicator"
-QT_MOC_LITERAL(28, 287, 7), // "indexes"
-QT_MOC_LITERAL(29, 295, 15), // "QList<QObject*>"
-QT_MOC_LITERAL(30, 311, 7) // "modules"
+QT_MOC_LITERAL(13, 111, 11), // "exportAsJPG"
+QT_MOC_LITERAL(14, 123, 8), // "addIndex"
+QT_MOC_LITERAL(15, 132, 9), // "editIndex"
+QT_MOC_LITERAL(16, 142, 11), // "removeIndex"
+QT_MOC_LITERAL(17, 154, 9), // "addModule"
+QT_MOC_LITERAL(18, 164, 10), // "editModule"
+QT_MOC_LITERAL(19, 175, 12), // "removeModule"
+QT_MOC_LITERAL(20, 188, 17), // "exportModuleAsXML"
+QT_MOC_LITERAL(21, 206, 19), // "importModuleFromXML"
+QT_MOC_LITERAL(22, 226, 7), // "valueAt"
+QT_MOC_LITERAL(23, 234, 11), // "removeValue"
+QT_MOC_LITERAL(24, 246, 11), // "validValues"
+QT_MOC_LITERAL(25, 258, 11), // "updateValue"
+QT_MOC_LITERAL(26, 270, 4), // "show"
+QT_MOC_LITERAL(27, 275, 9), // "indicator"
+QT_MOC_LITERAL(28, 285, 7), // "indexes"
+QT_MOC_LITERAL(29, 293, 15), // "QList<QObject*>"
+QT_MOC_LITERAL(30, 309, 7) // "modules"
 
     },
     "core::Application\0changed\0\0init\0create\0"
     "load\0save\0importXML\0exportAs\0Format\0"
     "exportAsXML\0exportAsPDF\0exportAsCSV\0"
-    "exportAsEXCEL\0exportAsJPG\0addIndex\0"
-    "editIndex\0removeIndex\0addModule\0"
-    "editModule\0removeModule\0exportModuleAsXML\0"
+    "exportAsJPG\0addIndex\0editIndex\0"
+    "removeIndex\0addModule\0editModule\0"
+    "removeModule\0exportModuleAsXML\0"
     "importModuleFromXML\0valueAt\0removeValue\0"
-    "updateValue\0show\0indicator\0indexes\0"
-    "QList<QObject*>\0modules"
+    "validValues\0updateValue\0show\0indicator\0"
+    "indexes\0QList<QObject*>\0modules"
 };
 #undef QT_MOC_LITERAL
 
@@ -82,7 +82,7 @@ static const uint qt_meta_data_core__Application[] = {
        0,       // classname
        0,    0, // classinfo
       24,   14, // methods
-       3,  232, // properties
+       3,  230, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -102,19 +102,19 @@ static const uint qt_meta_data_core__Application[] = {
       11,    1,  156,    2, 0x0a /* Public */,
       12,    1,  159,    2, 0x0a /* Public */,
       13,    1,  162,    2, 0x0a /* Public */,
-      14,    1,  165,    2, 0x0a /* Public */,
-      15,    6,  168,    2, 0x0a /* Public */,
-      16,    6,  181,    2, 0x0a /* Public */,
-      17,    1,  194,    2, 0x0a /* Public */,
-      18,    3,  197,    2, 0x0a /* Public */,
-      19,    3,  204,    2, 0x0a /* Public */,
-      20,    1,  211,    2, 0x0a /* Public */,
-      21,    2,  214,    2, 0x0a /* Public */,
-      22,    2,  219,    2, 0x0a /* Public */,
+      14,    6,  165,    2, 0x0a /* Public */,
+      15,    6,  178,    2, 0x0a /* Public */,
+      16,    1,  191,    2, 0x0a /* Public */,
+      17,    3,  194,    2, 0x0a /* Public */,
+      18,    3,  201,    2, 0x0a /* Public */,
+      19,    1,  208,    2, 0x0a /* Public */,
+      20,    2,  211,    2, 0x0a /* Public */,
+      21,    2,  216,    2, 0x0a /* Public */,
+      22,    1,  221,    2, 0x0a /* Public */,
       23,    1,  224,    2, 0x0a /* Public */,
-      24,    1,  227,    2, 0x0a /* Public */,
-      25,    0,  230,    2, 0x0a /* Public */,
-      26,    0,  231,    2, 0x0a /* Public */,
+      24,    0,  227,    2, 0x0a /* Public */,
+      25,    0,  228,    2, 0x0a /* Public */,
+      26,    0,  229,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -127,10 +127,9 @@ static const uint qt_meta_data_core__Application[] = {
     QMetaType::Bool, QMetaType::QString,    2,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 9,    2,    2,
     QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Bool, QMetaType::QString,    2,
     QMetaType::Void, QMetaType::QString,    2,
-    QMetaType::Void, QMetaType::QString,    2,
-    QMetaType::Void, QMetaType::QString,    2,
-    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Bool, QMetaType::QString,    2,
     QMetaType::Int, QMetaType::QString, QMetaType::Int, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,    2,    2,    2,    2,    2,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,    2,    2,    2,    2,    2,    2,
     QMetaType::Bool, QMetaType::Int,    2,
@@ -141,6 +140,7 @@ static const uint qt_meta_data_core__Application[] = {
     QMetaType::Bool, QMetaType::Int, QMetaType::QString,    2,    2,
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Bool, QMetaType::Int,    2,
+    QMetaType::Bool,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -171,25 +171,28 @@ void core::Application::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 6: _t->exportAs((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< Format(*)>(_a[2]))); break;
         case 7: _t->exportAsXML((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 8: _t->exportAsPDF((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 8: { bool _r = _t->exportAsPDF((*reinterpret_cast< QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 9: _t->exportAsCSV((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 10: _t->exportAsEXCEL((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 11: _t->exportAsJPG((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 12: { int _r = _t->addIndex((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5])),(*reinterpret_cast< double(*)>(_a[6])));
+        case 10: { bool _r = _t->exportAsJPG((*reinterpret_cast< QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 11: { int _r = _t->addIndex((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5])),(*reinterpret_cast< double(*)>(_a[6])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 13: _t->editIndex((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5])),(*reinterpret_cast< double(*)>(_a[6]))); break;
-        case 14: { bool _r = _t->removeIndex((*reinterpret_cast< int(*)>(_a[1])));
+        case 12: _t->editIndex((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5])),(*reinterpret_cast< double(*)>(_a[6]))); break;
+        case 13: { bool _r = _t->removeIndex((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 15: { int _r = _t->addModule((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])));
+        case 14: { int _r = _t->addModule((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 16: _t->editModule((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
-        case 17: { bool _r = _t->removeModule((*reinterpret_cast< int(*)>(_a[1])));
+        case 15: _t->editModule((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
+        case 16: { bool _r = _t->removeModule((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 18: _t->exportModuleAsXML((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 19: { bool _r = _t->importModuleFromXML((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+        case 17: _t->exportModuleAsXML((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 18: { bool _r = _t->importModuleFromXML((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 20: _t->valueAt((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: { bool _r = _t->removeValue((*reinterpret_cast< int(*)>(_a[1])));
+        case 19: _t->valueAt((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 20: { bool _r = _t->removeValue((*reinterpret_cast< int(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 21: { bool _r = _t->validValues();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 22: _t->updateValue(); break;
         case 23: _t->show(); break;

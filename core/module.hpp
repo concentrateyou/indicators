@@ -25,6 +25,7 @@ namespace core {
 		void setChilds(QVector<int>& childs);
 		void updateValues();
 
+		void toCSV(int, QTextStream&);
 		void toXML(QXmlStreamWriter&);
 		bool fromXML(QXmlStreamReader&);
 	signals:

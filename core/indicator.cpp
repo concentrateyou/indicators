@@ -95,6 +95,20 @@ bool Indicator::fromXML(QXmlStreamReader& r){
 	return result;
 }
 
+QList<int> Indicator::getChildsForQML(){
+	return childs.toList();
+}
+void Indicator::removeAllChilds(){
+	childs.clear();
+}
+
+void Indicator::toCSV(QTextStream& csv){
+	csv << name << ": " << value << "," << "\n";
+	foreach(int i, childs){
+		Value::at(i).toCSV(1, csv);
+	}
+}
+
 QDataStream& core::operator>>(QDataStream& in, Indicator& i){
 	QString name;
 	double value;
@@ -112,11 +126,4 @@ QDataStream& core::operator<<(QDataStream& out, Indicator& i){
 	out << i.getValue();
 	out << i.getChilds();
 	return out;
-}
-
-QList<int> Indicator::getChildsForQML(){
-	return childs.toList();
-}
-void Indicator::removeAllChilds(){
-	childs.clear();
 }

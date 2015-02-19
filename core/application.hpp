@@ -7,13 +7,13 @@
 #include <QList>
 #include <QDebug>
 #include <QXmlStreamWriter>
+#include <QQmlApplicationEngine>
 namespace core {
 	enum Format {
 		XML,
 		PDF,
 		JPG,
-		CSV,
-		EXCEL
+		CSV
 	};
 
 	class Application : public QObject{
@@ -25,7 +25,9 @@ namespace core {
 		Indicator indicator;
 		QMap<int, Module> modules;
 		QMap<int, Index> indexes;
+		static QQmlApplicationEngine* engine;
 	public:
+		static void setEngine(QQmlApplicationEngine*);
 		const QMap<int, Module>& getModules() const;
 		const QMap<int, Index>& getIndexes() const;
 		const Indicator& getIndicator() const;
@@ -41,10 +43,9 @@ namespace core {
 		bool importXML(QString);
 		void exportAs(QString, Format);
 		void exportAsXML(QString);
-		void exportAsPDF(QString);
+		bool exportAsPDF(QString);
 		void exportAsCSV(QString);
-		void exportAsEXCEL(QString);
-		void exportAsJPG(QString);
+		bool exportAsJPG(QString);
 		
 		int addIndex(QString, int, double, double, double, double);
 		void editIndex(int, QString, double, double, double, double);
@@ -58,7 +59,10 @@ namespace core {
 
 		Value& valueAt(int);
 		bool removeValue(int);
+
+		bool validValues();
 		void updateValue();
+
 		void show(){
 			qDebug() << "Indexes:";
 			foreach(int i, indexes.keys()){
